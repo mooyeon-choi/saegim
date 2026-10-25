@@ -1,0 +1,15 @@
+name: Feature request
+description: Suggest a workflow or capability.
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Problem and desired result
+      description: Describe the task you want to complete and the current limitation.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example
+      description: Optional synthetic example, alternatives or references.

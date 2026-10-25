@@ -1,0 +1,644 @@
+{
+  "schemaVersion": 1,
+  "id": "demo-motion-001",
+  "name": "Editable motion sample",
+  "width": 960,
+  "height": 540,
+  "duration": 8,
+  "fps": 30,
+  "background": "#f5f5ef",
+  "scenes": [
+    {
+      "id": "scene-1",
+      "name": "등장",
+      "start": 0,
+      "end": 2.4
+    },
+    {
+      "id": "scene-2",
+      "name": "움직임",
+      "start": 2.4,
+      "end": 6.4
+    },
+    {
+      "id": "scene-3",
+      "name": "마무리",
+      "start": 6.4,
+      "end": 8
+    }
+  ],
+  "nodes": [
+    {
+      "id": "eyebrow",
+      "name": "작은 제목 · MOTION, REBUILT",
+      "type": "text",
+      "x": 72,
+      "y": 68,
+      "width": 420,
+      "height": 20,
+      "rotation": 0,
+      "opacity": 1,
+      "fill": "#75766e",
+      "stroke": "none",
+      "strokeWidth": 0,
+      "start": 0,
+      "end": 8,
+      "hidden": false,
+      "locked": false,
+      "keyframes": [
+        {
+          "time": 0,
+          "x": 0,
+          "y": 12,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 0.6,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 7,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        }
+      ],
+      "text": "MOTION, REBUILT",
+      "fontSize": 14,
+      "letterSpacing": 3,
+      "fontWeight": 650,
+      "fontFamily": "Arial, sans-serif"
+    },
+    {
+      "id": "headline",
+      "name": "한글 제목",
+      "type": "text",
+      "x": 66,
+      "y": 124,
+      "width": 810,
+      "height": 90,
+      "rotation": 0,
+      "opacity": 1,
+      "fill": "#25252c",
+      "stroke": "none",
+      "strokeWidth": 0,
+      "start": 0,
+      "end": 8,
+      "hidden": false,
+      "locked": false,
+      "keyframes": [
+        {
+          "time": 0,
+          "x": 0,
+          "y": 38,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 0.85,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 6.9,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 8,
+          "x": 0,
+          "y": -12,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        }
+      ],
+      "text": "Make motion editable.",
+      "fontSize": 68,
+      "fontWeight": 800,
+      "letterSpacing": -3,
+      "fontFamily": "Arial, sans-serif"
+    },
+    {
+      "id": "subtitle",
+      "name": "영문 설명",
+      "type": "text",
+      "x": 72,
+      "y": 224,
+      "width": 600,
+      "height": 32,
+      "rotation": 0,
+      "opacity": 1,
+      "fill": "#787971",
+      "stroke": "none",
+      "strokeWidth": 0,
+      "start": 0,
+      "end": 8,
+      "hidden": false,
+      "locked": false,
+      "keyframes": [
+        {
+          "time": 0,
+          "x": 0,
+          "y": 18,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 0.45,
+          "x": 0,
+          "y": 18,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 1.2,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 7,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        }
+      ],
+      "text": "Every frame, editable.",
+      "fontSize": 24,
+      "letterSpacing": -0.4,
+      "fontWeight": 400,
+      "fontFamily": "Arial, sans-serif"
+    },
+    {
+      "id": "orbit-circle",
+      "name": "녹색 원",
+      "type": "ellipse",
+      "x": 92,
+      "y": 332,
+      "width": 112,
+      "height": 112,
+      "rotation": 0,
+      "opacity": 1,
+      "fill": "#b8df52",
+      "stroke": "none",
+      "strokeWidth": 0,
+      "start": 0,
+      "end": 8,
+      "hidden": false,
+      "locked": false,
+      "keyframes": [
+        {
+          "time": 0,
+          "x": -90,
+          "y": 0,
+          "scaleX": 0.2,
+          "scaleY": 0.2,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 0.3,
+          "x": -90,
+          "y": 0,
+          "scaleX": 0.2,
+          "scaleY": 0.2,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 1.35,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 3.8,
+          "x": 150,
+          "y": -35,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 5.2,
+          "x": 75,
+          "y": 0,
+          "scaleX": 1.15,
+          "scaleY": 1.15,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 6.8,
+          "x": 22,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 8,
+          "x": 22,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        }
+      ]
+    },
+    {
+      "id": "square",
+      "name": "보라 사각형",
+      "type": "rect",
+      "x": 397,
+      "y": 337,
+      "width": 104,
+      "height": 104,
+      "rotation": 0,
+      "opacity": 1,
+      "fill": "#9f8fe5",
+      "stroke": "none",
+      "strokeWidth": 0,
+      "start": 0,
+      "end": 8,
+      "hidden": false,
+      "locked": false,
+      "keyframes": [
+        {
+          "time": 0,
+          "x": 0,
+          "y": 75,
+          "scaleX": 0.6,
+          "scaleY": 0.6,
+          "rotation": -30,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 0.6,
+          "x": 0,
+          "y": 75,
+          "scaleX": 0.6,
+          "scaleY": 0.6,
+          "rotation": -30,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 1.65,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 3.9,
+          "x": 38,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 95,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 5.8,
+          "x": 5,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 180,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 6.8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 180,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 180,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        }
+      ],
+      "borderRadius": 19
+    },
+    {
+      "id": "arrow",
+      "name": "주황색 선 아이콘",
+      "type": "path",
+      "x": 690,
+      "y": 342,
+      "width": 96,
+      "height": 96,
+      "rotation": 0,
+      "opacity": 1,
+      "fill": "none",
+      "stroke": "#ef8b52",
+      "strokeWidth": 11,
+      "start": 0,
+      "end": 8,
+      "hidden": false,
+      "locked": false,
+      "keyframes": [
+        {
+          "time": 0,
+          "x": -25,
+          "y": 25,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 0.9,
+          "x": -25,
+          "y": 25,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 1.9,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 3.5,
+          "x": 38,
+          "y": -25,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 5.1,
+          "x": -20,
+          "y": 15,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 6.8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        }
+      ],
+      "path": "M 120 880 L 880 120 M 120 120 L 880 120 L 880 880"
+    },
+    {
+      "id": "baseline",
+      "name": "하단 구분선",
+      "type": "line",
+      "x": 72,
+      "y": 485,
+      "width": 816,
+      "height": 0,
+      "rotation": 0,
+      "opacity": 1,
+      "fill": "none",
+      "stroke": "#d9dad2",
+      "strokeWidth": 1,
+      "start": 0,
+      "end": 8,
+      "hidden": false,
+      "locked": false,
+      "keyframes": [
+        {
+          "time": 0,
+          "x": 0,
+          "y": 0,
+          "scaleX": 0,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 0.8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 0,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 1.8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        }
+      ]
+    },
+    {
+      "id": "caption",
+      "name": "하단 설명",
+      "type": "text",
+      "x": 72,
+      "y": 501,
+      "width": 600,
+      "height": 17,
+      "rotation": 0,
+      "opacity": 1,
+      "fill": "#93958b",
+      "stroke": "none",
+      "strokeWidth": 0,
+      "start": 0,
+      "end": 8,
+      "hidden": false,
+      "locked": false,
+      "keyframes": [
+        {
+          "time": 0,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 1.4,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 2.1,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 7,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 1,
+          "easing": "ease-in-out"
+        },
+        {
+          "time": 8,
+          "x": 0,
+          "y": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "rotation": 0,
+          "opacity": 0,
+          "easing": "ease-in-out"
+        }
+      ],
+      "text": "TEXT  /  SHAPES  /  TIMING",
+      "fontSize": 10,
+      "letterSpacing": 1.5,
+      "fontWeight": 600,
+      "fontFamily": "Arial, sans-serif"
+    }
+  ]
+}

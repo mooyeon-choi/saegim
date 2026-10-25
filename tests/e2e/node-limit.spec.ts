@@ -1,0 +1,32 @@
+import { expect, test } from '@playwright/test';
+import { createDemoProject } from '../../src/demo';
+import { MAX_PROJECT_NODES } from '../../src/engine/limits';
+
+test('adding and duplicating obey the shared 8000-node limit and recover after undo', async ({ page }) => {
+  const project = createDemoProject();
+  const shape = project.nodes.find(node => node.type === 'rect')!;
+  const title = project.nodes.find(node => node.type === 'text')!;
+  project.name = '요소 한도 검수';
+  project.nodes = Array.from({ length: MAX_PROJECT_NODES - 2 }, (_, index) => index === 0 ? { ...title, id: 'limit-title' } : { ...shape, id: `limit-${index}`, hidden: true, keyframes: [] });
+  const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/');
+  await page.getByTestId('import-input').setInputFiles({ name: 'node-limit.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(project)) });
+  await expect(page.locator('.header-project')).toContainText(project.name);
+  await page.getByRole('button', { name: '요소 추가', exact: true }).click();
+  await page.getByRole('button', { name: '텍스트 추가', exact: true }).click();
+  await expect(page.locator('.count-badge')).toHaveText(String(MAX_PROJECT_NODES - 1));
+  await page.getByRole('button', { name: '복제', exact: true }).click();
+  await expect(page.locator('.count-badge')).toHaveText(String(MAX_PROJECT_NODES));
+  await page.getByRole('button', { name: '복제', exact: true }).click();
+  await expect(page.locator('.error-banner')).toContainText('8,000개');
+  await expect(page.locator('.count-badge')).toHaveText(String(MAX_PROJECT_NODES));
+  await page.getByRole('button', { name: '요소 추가', exact: true }).click();
+  await page.getByRole('button', { name: '사각형 추가', exact: true }).click();
+  await expect(page.locator('.error-banner')).toContainText('추가해 주세요');
+  await expect(page.locator('.count-badge')).toHaveText(String(MAX_PROJECT_NODES));
+  await page.getByRole('button', { name: '실행 취소', exact: true }).click();
+  await expect(page.locator('.count-badge')).toHaveText(String(MAX_PROJECT_NODES - 1));
+  await page.getByRole('button', { name: '사각형 추가', exact: true }).click();
+  await expect(page.locator('.count-badge')).toHaveText(String(MAX_PROJECT_NODES));
+  expect(errors).toEqual([]);
+});

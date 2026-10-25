@@ -1,0 +1,51 @@
+{
+  "name": "saegim",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:web": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:workflow": "node tests/workflow/smoke.mjs",
+    "test:elements": "node --test tests/workflow/element-assets.mjs tests/workflow/svg-curves.mjs tests/workflow/gradient-fit.mjs",
+    "setup": "node scripts/setup.mjs",
+    "workflow": "node scripts/workflow.mjs",
+    "doctor": "node scripts/workflow.mjs doctor",
+    "release:check": "node scripts/release-check.mjs",
+    "release:package": "node scripts/package-source.mjs"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2",
+    "lucide-react": "^0.468.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "esbuild": "^0.25.12",
+    "typescript": "~5.9.3",
+    "vite": "^6.4.1",
+    "vitest": "^4.1.12"
+  },
+  "description": "Reconstruct local motion graphics as editable HTML/SVG, with agent skills and source comparisons.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mooyeon-choi/saegim.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mooyeon-choi/saegim/issues"
+  },
+  "homepage": "https://github.com/mooyeon-choi/saegim#readme",
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

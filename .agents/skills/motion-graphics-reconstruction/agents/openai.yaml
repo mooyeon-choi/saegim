@@ -1,0 +1,4 @@
+interface:
+  display_name: "Motion Graphics Reconstruction"
+  short_description: "Rebuild editable vector motion from local video"
+  default_prompt: "Use $motion-graphics-reconstruction to convert this local video into editable HTML/SVG and verify it against the source."

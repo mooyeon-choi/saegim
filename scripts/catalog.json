@@ -1,0 +1,453 @@
+{
+  "schemaVersion": 2,
+  "scope": "Public reusable source scripts only. Local reference-specific experiments and generated data are intentionally excluded.",
+  "generatedOn": "2026-10-18",
+  "statusDefinitions": {
+    "maintained": "Reusable development, analysis, validation or release tool included in the public source scope. Prerequisites still apply."
+  },
+  "entryCount": 22,
+  "entries": [
+    {
+      "path": "scripts/analyze-video.py",
+      "status": "maintained",
+      "stage": "analysis",
+      "purpose": "Analyze a caller-supplied local video through the running application API and save an editable project plus input/output hashes.",
+      "invocation": "python-cli",
+      "freshClone": "requires-running-api-and-user-video",
+      "prerequisites": [
+        "Python dependencies; running local API; user-provided video within upload limits. A clip range must include both start and end."
+      ],
+      "cliOptionsObserved": [
+        "--input",
+        "--out-dir",
+        "--base-url",
+        "--quality",
+        "--sample-fps",
+        "--clip-start",
+        "--clip-end",
+        "--timeout",
+        "--overwrite"
+      ],
+      "outputs": [
+        "<out-dir>/project.json",
+        "<out-dir>/analysis-check.json"
+      ],
+      "inputLimits": {
+        "uploadBytes": 104857600,
+        "fullVideoMaximumSeconds": 60,
+        "clipMinimumSeconds": 0.2,
+        "clipMaximumSeconds": 60,
+        "compositionRoutingAboveSeconds": 30,
+        "compositionMaximumSegments": 64,
+        "compositionMaximumEncodedSegmentBytes": 268435456
+      },
+      "outputRouting": "The API routes videos or prepared clips above 30 seconds to a segmented schemaVersion 2 composition; shorter inputs use a schemaVersion 1 project. Processing segment boundaries are not necessarily source scene cuts."
+    },
+    {
+      "path": "scripts/compare-frames.py",
+      "status": "maintained",
+      "stage": "generic-validation",
+      "purpose": "Compare actual source frames with visual-qa.mjs screenshots (no accuracy claims).",
+      "invocation": "python-cli-or-module",
+      "freshClone": "requires-generated-inputs",
+      "prerequisites": [
+        "Fixture videos and visual-qa.mjs rendered PNGs"
+      ],
+      "cliOptionsObserved": [],
+      "literalResourceReferences": [
+        ".data/media/motion-demo-v1.mp4",
+        ".data/qa-fixtures",
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+      ]
+    },
+    {
+      "path": "scripts/compare-video.py",
+      "status": "maintained",
+      "stage": "comparison",
+      "purpose": "Build a labelled side-by-side GIF from caller-supplied original and rendered local videos, preserving timing at the selected GIF frame rate.",
+      "invocation": "python-cli",
+      "freshClone": "requires-caller-videos",
+      "prerequisites": [
+        "Python dependencies; original and rendered videos; source-start matching any analyzed clip offset. No operating-system-specific font path required."
+      ],
+      "cliOptionsObserved": [
+        "--source",
+        "--rendered",
+        "--output",
+        "--fps",
+        "--width",
+        "--source-start",
+        "--overwrite"
+      ],
+      "outputs": [
+        "<output>.gif",
+        "<output-stem>.json",
+        "<output-stem>.last.png"
+      ]
+    },
+    {
+      "path": "scripts/create-fixtures.py",
+      "status": "maintained",
+      "stage": "generic-validation",
+      "purpose": "Independent benchmark videos, drawn without using the reconstruction engine.",
+      "invocation": "python-cli-or-module",
+      "freshClone": "after-dependency-install",
+      "prerequisites": [
+        "Python dependencies; no reference media required"
+      ],
+      "cliOptionsObserved": [],
+      "literalResourceReferences": [
+        "/System/Library/Fonts/Supplemental/Arial.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+      ]
+    },
+    {
+      "path": "scripts/dev.mjs",
+      "status": "maintained",
+      "stage": "development",
+      "purpose": "Start the FastAPI backend on 8000 and the Vite frontend.",
+      "invocation": "node-cli",
+      "freshClone": "application-runtime",
+      "prerequisites": [
+        "npm dependencies; local .venv prepared by npm run setup"
+      ],
+      "cliOptionsObserved": [],
+      "literalResourceReferences": []
+    },
+    {
+      "path": "scripts/export-elements.mjs",
+      "status": "maintained",
+      "stage": "vector-assets",
+      "purpose": "Export annotated vectors with optional bounded contour fitting and caller-defined back surfaces, preserving front-to-back stacks and text.",
+      "invocation": "node-cli",
+      "freshClone": "requires-caller-project-and-region-annotations",
+      "prerequisites": [
+        "npm dependencies; Playwright Chromium; app project and caller-defined closed visible-region paths. This does not automatically infer semantic masks or hidden geometry."
+      ],
+      "cliOptionsObserved": [
+        "--project",
+        "--regions",
+        "--out-dir",
+        "--overwrite",
+        "--smooth-px",
+        "--help"
+      ],
+      "outputs": [
+        "<out-dir>/manifest.json",
+        "<out-dir>/index.html",
+        "<out-dir>/cut-*/<section>/*.svg",
+        "<out-dir>/vector-elements.zip",
+        "<out-dir>/export-check.json"
+      ]
+    },
+    {
+      "path": "scripts/lib/asset-gallery.mjs",
+      "status": "maintained",
+      "stage": "vector-asset-gallery",
+      "purpose": "Generate an offline gallery for exported SVG assets with source cuts, editorial sections, selection and visibility toggles.",
+      "invocation": "javascript-module",
+      "freshClone": "consumed-by-export-elements",
+      "prerequisites": [
+        "Manifest emitted by export-elements.mjs"
+      ],
+      "cliOptionsObserved": [],
+      "exports": [
+        "assetGallery"
+      ]
+    },
+    {
+      "path": "scripts/lib/release-files.mjs",
+      "status": "maintained",
+      "stage": "release-library",
+      "purpose": "Shared Git candidate discovery, SHA-256 and public-source inspection used by release-check and package-source.",
+      "invocation": "javascript-module",
+      "freshClone": "consumed-by-release-tools",
+      "prerequisites": [
+        "Git checkout and source files; imported by release-check.mjs and package-source.mjs."
+      ],
+      "cliOptionsObserved": [],
+      "exports": [
+        "root",
+        "sha",
+        "inspectFiles"
+      ]
+    },
+    {
+      "path": "scripts/object-scene-runtime.mjs",
+      "status": "maintained",
+      "stage": "experimental-object-rendering",
+      "purpose": "Validate and render generic object-scene-v1 models as SVG with caller-defined material groups and optional color overrides.",
+      "invocation": "javascript-module",
+      "freshClone": "requires-caller-model",
+      "prerequisites": [
+        "Caller-supplied object-scene-v1 model. This is a JavaScript library, separate from the app project renderer."
+      ],
+      "cliOptionsObserved": [],
+      "literalResourceReferences": []
+    },
+    {
+      "path": "scripts/object_scene_tracks.py",
+      "status": "maintained",
+      "stage": "experimental-object-tracking",
+      "purpose": "Assemble caller-supplied ellipse/contour/Bezier observations into conservative tracks using metadata dimensions, FPS, frame count and cuts.",
+      "invocation": "python-cli-or-module",
+      "freshClone": "requires-caller-observations",
+      "prerequisites": [
+        "Python dependencies; caller-supplied metadata and complete frame observations. No video is directly ingested."
+      ],
+      "cliOptionsObserved": [
+        "--ambiguity-margin",
+        "--max-resample-error",
+        "--max-shape-rms",
+        "--meta",
+        "--observations",
+        "--observations-dir",
+        "--out",
+        "--report"
+      ],
+      "literalResourceReferences": []
+    },
+    {
+      "path": "scripts/package-source.mjs",
+      "status": "maintained",
+      "stage": "release",
+      "purpose": "Package inspected public source into a ZIP and independently unzip/hash every listed source entry before reporting success.",
+      "invocation": "node-cli",
+      "freshClone": "after-dependency-install",
+      "prerequisites": [
+        "npm dependencies; Git checkout; passing release-file inspection."
+      ],
+      "cliOptionsObserved": [],
+      "outputs": [
+        "dist/github-source/frameform-source.zip",
+        "dist/github-source/package-check.json"
+      ],
+      "limits": [
+        "Does not include ignored media, caches, generated output or dependencies.",
+        "Does not publish to GitHub."
+      ]
+    },
+    {
+      "path": "scripts/parametric-vector-model.mjs",
+      "status": "maintained",
+      "stage": "experimental-parametric-rendering",
+      "purpose": "Dependency-free numeric vector model library with interpolation, projective transforms, validation and SVG rendering; independent from app project and object-scene formats.",
+      "invocation": "javascript-module",
+      "freshClone": "requires-caller-model",
+      "prerequisites": [
+        "Caller-supplied model matching this library schema. See tests/engine/parametric.test.ts for examples."
+      ],
+      "cliOptionsObserved": [],
+      "exports": [
+        "createParametricVectorRuntime",
+        "validateModel",
+        "createRenderer",
+        "evaluate",
+        "render",
+        "projectPoint",
+        "interpolate"
+      ]
+    },
+    {
+      "path": "scripts/release-check.mjs",
+      "status": "maintained",
+      "stage": "release",
+      "purpose": "Inspect current Git tracked and non-ignored untracked files for public-source scope, file size, selected sensitive patterns and script catalog coverage.",
+      "invocation": "node-cli",
+      "freshClone": "after-dependency-install",
+      "prerequisites": [
+        "Git checkout or initialized Git folder; public-source manifest/catalog and required source files."
+      ],
+      "cliOptionsObserved": [],
+      "outputs": [
+        ".cache/public-source-check.json"
+      ],
+      "limits": [
+        "Pattern scan is not a comprehensive secret audit.",
+        "Does not stage, commit, create a remote or upload files."
+      ]
+    },
+    {
+      "path": "scripts/render-project.mjs",
+      "status": "maintained",
+      "stage": "render",
+      "purpose": "Export validated app schema1/schema2 project JSON to standalone HTML and optionally render its SVG stage into a duration-checked MP4.",
+      "invocation": "node-cli",
+      "freshClone": "requires-caller-project",
+      "prerequisites": [
+        "npm dependencies; caller-supplied app project JSON; Playwright Chromium and local Python/imageio-ffmpeg for video output. object-scene-v1 is a different input format."
+      ],
+      "cliOptionsObserved": [
+        "--project",
+        "--out-dir",
+        "--fps",
+        "--width",
+        "--python",
+        "--html-only",
+        "--overwrite",
+        "--help"
+      ],
+      "outputs": [
+        "<out-dir>/index.html",
+        "<out-dir>/preview.mp4 (unless html-only)",
+        "<out-dir>/render-check.json",
+        "<out-dir>/frame-*.png (first and last)"
+      ]
+    },
+    {
+      "path": "scripts/setup.mjs",
+      "status": "maintained",
+      "stage": "development",
+      "purpose": "Create a local Python environment and install requirements.",
+      "invocation": "node-cli",
+      "freshClone": "environment-setup",
+      "prerequisites": [
+        "Node.js and Python >=3.10; network access for Python package installation"
+      ],
+      "cliOptionsObserved": [],
+      "literalResourceReferences": []
+    },
+    {
+      "path": "scripts/verify-analysis.py",
+      "status": "maintained",
+      "stage": "generic-validation",
+      "purpose": "Exercise the public upload API on independent videos and save review artifacts.",
+      "invocation": "python-cli-or-module",
+      "freshClone": "requires-generated-inputs",
+      "prerequisites": [
+        "Local running API; generated .data/qa-fixtures/*.mp4"
+      ],
+      "cliOptionsObserved": [
+        "--base-url",
+        "files"
+      ],
+      "literalResourceReferences": []
+    },
+    {
+      "path": "scripts/visual-qa.mjs",
+      "status": "maintained",
+      "stage": "generic-validation",
+      "purpose": "Render analyzed projects at known source times, independently of the editor UI.",
+      "invocation": "node-cli",
+      "freshClone": "requires-generated-inputs",
+      "prerequisites": [
+        "artifacts/qa/*.json from verify-analysis.py; Playwright Chromium"
+      ],
+      "cliOptionsObserved": [],
+      "literalResourceReferences": [
+        "artifacts/qa"
+      ]
+    },
+    {
+      "path": "scripts/workflow.mjs",
+      "status": "maintained",
+      "stage": "workflow",
+      "purpose": "Dispatch named reusable tasks to their Python/Node entry points and inspect local dependencies without installing them.",
+      "invocation": "node-cli",
+      "freshClone": "depends-on-selected-task",
+      "prerequisites": [
+        "Dependencies required by the selected task; Uses local .venv when present; FRAMEFORM_PYTHON is a fallback when .venv is absent."
+      ],
+      "tasks": [
+        "list",
+        "help",
+        "doctor",
+        "analyze",
+        "render",
+        "elements",
+        "fit-surfaces",
+        "compare",
+        "fixtures",
+        "verify-fixtures",
+        "render-fixtures",
+        "compare-fixtures",
+        "release-check",
+        "package"
+      ],
+      "cliOptionsObserved": [
+        "--help"
+      ],
+      "argumentPolicy": "Arguments after the task name are forwarded to the selected script."
+    },
+    {
+      "path": "scripts/lib/svg-curves.mjs",
+      "status": "maintained",
+      "stage": "vector-contours",
+      "purpose": "Fit SVG polylines to corner-aware cubic curves with a sampled source-pixel error bound and preserved subpaths.",
+      "invocation": "javascript-module",
+      "freshClone": "consumed-by-export-elements",
+      "prerequisites": [
+        "No extra dependencies; factory also runs in Chromium."
+      ],
+      "cliOptionsObserved": [],
+      "exports": [
+        "createPathSmoother"
+      ]
+    },
+    {
+      "path": "scripts/fit-surface-gradients.mjs",
+      "status": "maintained",
+      "stage": "vector-colors",
+      "purpose": "Fit caller-defined solid surface gradients to visible source SVG colors, preserving geometry and reporting held-out CIELAB DeltaE76.",
+      "invocation": "node-cli",
+      "freshClone": "requires-reference-vector-library-and-surface-annotations",
+      "prerequisites": [
+        "npm dependencies and Playwright Chromium; reference library and compatible surface regions"
+      ],
+      "cliOptionsObserved": [
+        "--library",
+        "--regions",
+        "--out-dir",
+        "--overwrite",
+        "--help"
+      ],
+      "outputs": [
+        "<out-dir>/regions.json",
+        "<out-dir>/gradient-fit-report.json"
+      ]
+    },
+    {
+      "path": "scripts/lib/gradient-fit.mjs",
+      "status": "maintained",
+      "stage": "vector-colors",
+      "purpose": "Fit bounded 2/4/8-stop sRGB gradients, select direction by held-out CIELAB error, and retain existing colors when evidence is insufficient.",
+      "invocation": "javascript-module",
+      "freshClone": "consumed-by-fit-surface-gradients",
+      "prerequisites": [
+        "No additional dependencies"
+      ],
+      "cliOptionsObserved": [],
+      "exports": [
+        "createGradientFitter"
+      ]
+    },
+    {
+      "path": "scripts/compare-parts.py",
+      "status": "maintained",
+      "stage": "comparison",
+      "purpose": "Compare fixed caller-annotated part ROIs in aligned source, actual rendered and optional baseline stills; report contextual RGB MAE and optional independent visible-source color MAE without shape accuracy claims.",
+      "invocation": "python-cli-or-module",
+      "freshClone": "requires-caller-images-and-part-annotations",
+      "prerequisites": [
+        "Python dependencies (Pillow and NumPy); opaque aligned equal-sized source/rendered stills and a part-comparison-v1 manifest. Optional full-size binary visible masks must be independent source annotations, not generated geometry."
+      ],
+      "cliOptionsObserved": [
+        "--manifest",
+        "--out-dir",
+        "--overwrite",
+        "--help"
+      ],
+      "outputs": [
+        "<out-dir>/index.html",
+        "<out-dir>/report.json",
+        "<out-dir>/<frame-id>/<part-id>/*.png"
+      ],
+      "limits": [
+        "No automatic segmentation, image registration or temporal alignment.",
+        "ROI crops may include foreground occluders and background; visible-mask metrics measure color only.",
+        "Does not measure shape IoU or reconstruction accuracy percentages, and does not claim full-video visual review."
+      ]
+    }
+  ]
+}
