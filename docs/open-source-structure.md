@@ -10,6 +10,6 @@ Reviewed on 2026-10-25. These projects informed documentation and repository lay
 
 Saegim remains one repository: editor, renderer, analysis API and CLI share schemas and validation. Splitting them into published packages would add versioning work without an established independent API contract.
 
-The public package contains source, skills, tests, documentation, licenses and an authored synthetic example. It excludes uploaded media, private experiments, generated projects and per-video corrections. Local research artifacts remain on disk.
+The public package contains source, skills, tests, documentation, licenses, an authored synthetic example and deliberately reviewed synthetic reconstruction/edit examples for the README. User uploads, private experiments, unselected generated projects and per-video corrections remain excluded. Local research artifacts remain on disk.
 
 Source checking and packaging only inspect and package files. Git commits, remote creation and uploading are separate actions. Historical `FRAMEFORM_*` variables and local storage identifiers remain compatible while the public name is Saegim.

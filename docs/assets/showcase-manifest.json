@@ -1,0 +1,66 @@
+{
+  "sourceGenerator": "scripts/create-fixtures.py",
+  "sourceFixture": "motion-shapes.mp4",
+  "sourceSHA256": "d7a4b9c50212973694442b6806c8efecac34e79f5f6f5dcd96d3d94ce3b513bb",
+  "analysis": {
+    "quality": "standard",
+    "sampleFps": 30,
+    "sampleCount": 90,
+    "ocr": "macOS Vision",
+    "manualGeometryCleanup": false
+  },
+  "gifs": [
+    {
+      "file": "conversion.gif",
+      "bytes": 269697,
+      "sha256": "d96362828c056dac5529841c848ab5f6e5f84c32c6b9b07d9c836c462d8900c0",
+      "width": 960,
+      "height": 328,
+      "frames": 60,
+      "durationMs": 3000
+    },
+    {
+      "file": "title-edit.gif",
+      "bytes": 262139,
+      "sha256": "ca3d679aa86d1e452f19212bbd364487fc18284bd2aa094f4944cdf6ef6fccdd",
+      "width": 960,
+      "height": 328,
+      "frames": 60,
+      "durationMs": 3000
+    },
+    {
+      "file": "color-edit.gif",
+      "bytes": 259005,
+      "sha256": "bbf11adf5987c9384b11a88b6073f8b8b6dd6030d1c137d72880f0b16c2e5b80",
+      "width": 960,
+      "height": 328,
+      "frames": 60,
+      "durationMs": 3000
+    }
+  ],
+  "projects": [
+    {
+      "file": "colors-edited.json",
+      "sha256": "f9fdd7da6525ec03fe5e54647f0a6d035dd58d0fdbff8870353d1094f8388a76"
+    },
+    {
+      "file": "project.json",
+      "sha256": "97d4fee2e85afb4f1b56843fa0714e3f1f41b062780854fa507f567d741a5bb9"
+    },
+    {
+      "file": "title-edited.json",
+      "sha256": "105ec364d037d1b42b327bdb4946bb561f7aac1ab0396840ccb3cc6c44290406"
+    }
+  ],
+  "reviewTimesSeconds": [
+    0,
+    0.35,
+    0.7,
+    1.05,
+    1.4,
+    1.75,
+    2.1,
+    2.45,
+    2.95
+  ]
+}

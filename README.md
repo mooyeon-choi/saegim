@@ -9,9 +9,38 @@
 
 Saegim turns observations from a local 2D video into a project containing text, shapes, contours, gradients and timing. Compare the reconstruction with the source, edit the result, and export standalone HTML. Repository skills guide coding agents through reconstruction and repeated source comparisons.
 
+## See it in action
+
+One local video → editable elements → a new title or palette. These are actual engine renders of a **3-second synthetic clip**, analyzed in standard mode at 30 samples/second on macOS. Font matching, color and edge differences remain; this simple example does not represent every video's reconstruction quality.
+
+### 1. Convert video to editable SVG
+
+![Left: source video. Right: automatically reconstructed text, moving circle and rectangle.](docs/assets/conversion.gif)
+
+**Left:** source video. **Right:** automatic reconstruction as **one text element, one ellipse and one rectangle**. No manual geometry cleanup was applied. The exported scene contains SVG elements, not a copy of the video.
+
+### 2. Change the title, keep the motion
+
+![Before and after changing HELLO FRAME to HELLO SAEGIM, with the shapes following the same motion.](docs/assets/title-edit.gif)
+
+Select the text → edit **텍스트** → export. Here, `HELLO FRAME` becomes `HELLO SAEGIM`; the shapes and motion stay unchanged. [Open the edited project](examples/reconstruction-demo/title-edited.json).
+
+### 3. Change the colors
+
+![Before and after changing the pink circle to teal and the lime rectangle to violet.](docs/assets/color-edit.gif)
+
+Select a shape → change **채우기** (fill). The circle becomes teal (`#25c6b5`) and the rectangle violet (`#9b87f5`), while the title, geometry and motion stay unchanged. This demonstrates solid fill editing. [Open the color-edited project](examples/reconstruction-demo/colors-edited.json).
+
+**Try it:** after setup, use **프로젝트 열기** (Open project) to load [the unedited reconstruction](examples/reconstruction-demo/project.json). All three projects are included. [Source, steps and verification](examples/reconstruction-demo/README.md).
+
+<details>
+<summary>See the editor interface</summary>
+
 ![Saegim editor showing an authored text-and-shapes example](docs/assets/editor.png)
 
-*This screenshot uses the included authored example. It demonstrates editing, not automatic reconstruction accuracy.*
+This separate screenshot uses the authored sample. It demonstrates the editor interface, not automatic reconstruction accuracy.
+
+</details>
 
 ## What you can do
 
@@ -83,7 +112,7 @@ The skills need this repository and its dependencies; copying a skill folder alo
 | `server/` | Local FastAPI analysis, OCR, contour/color fitting and cut detection |
 | `scripts/` | Analysis, rendering, comparison, SVG extraction and source packaging |
 | `.agents/skills/` | Reconstruction and iterative part-matching instructions |
-| `examples/` | Small authored fixtures without third-party source media |
+| `examples/` | Authored fixtures and reviewed synthetic reconstruction/edit examples |
 | `tests/` | Engine, API, workflow and browser checks |
 | `docs/` | Architecture, input contracts and contributor guidance |
 

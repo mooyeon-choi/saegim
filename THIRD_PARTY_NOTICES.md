@@ -15,6 +15,6 @@ JavaScript dependencies and versions are recorded in `package.json` and `package
 
 ## Input and output media
 
-The public source package does not contain user-uploaded videos, derived comparison GIFs or case-specific masks and observations. Their inclusion in a separate release requires a deliberate selection outside this source packaging workflow.
+The public source package excludes user-uploaded videos and private case-specific masks, observations and renders. The deliberately selected GIFs in `docs/assets/` and projects in `examples/reconstruction-demo/` use the repository's independently drawn synthetic fixture. They are documentation examples distributed under this project's MIT license; see [their provenance](examples/reconstruction-demo/README.md). They contain no third-party source video or embedded font binaries.
 
 Saegim's original project source is distributed under the [MIT License](LICENSE). Bundled fonts and dependencies retain the separate licenses noted above.

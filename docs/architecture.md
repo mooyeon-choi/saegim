@@ -40,4 +40,4 @@ Part matching compares actual candidate renders against a fixed baseline and cal
 
 Uploaded media, generated projects, renders and comparison reports belong in ignored directories such as `.data/` and `artifacts/`. Keep source titles, palettes, object identities and manual masks in per-input artifacts rather than production code.
 
-The public example is authored synthetic data. The publication scanner and ZIP builder select public source files and verify their contents; they do not publish to GitHub. Local API endpoints are development services without multi-user authentication; see [security guidance](../SECURITY.md).
+Public examples use authored synthetic data. The README's reconstruction/edit examples are actual analysis outputs from that data, deliberately reviewed for documentation. User media and ordinary generated outputs remain ignored. The publication scanner and ZIP builder select public source files and verify their contents; they do not publish to GitHub. Local API endpoints are development services without multi-user authentication; see [security guidance](../SECURITY.md).
