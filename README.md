@@ -13,6 +13,33 @@ Saegim turns observations from a local 2D video into a project containing text, 
 
 Start with a local video, inspect the SVG reconstruction, then edit the title or palette. These examples show actual engine renders and their remaining differences.
 
+### Rich character motion, lighting and scene transitions
+
+This new **8.04-second AI-generated film** builds on the earlier Dream Stage visual studies: a close-up character and floating companion, a monitor and rocket reveal, a foreground wipe, then a wide stage with clouds, stars, stairs, rim lighting and floor reflections. Its rounded silhouettes use a stylized **2.5D** shaded appearance.
+
+#### Full film: source → editable SVG
+
+![Complete rich motion film: prepared AI source on the left and actual frame-redrawn SVG reconstruction on the right.](docs/assets/rich-conversion.gif)
+
+The complete 193-frame film was analyzed at **640 × 360 / 24 observations per second**. The GIF shows the actual SVG render, including cut changes and fast foreground motion. The input was generated with Higgsfield / Seedance 2.5 using three original styleframes from our earlier work; the source film and generation details are included. [Source, projects and verification](examples/rich-motion/README.md).
+
+#### Final 2 seconds: change the title
+
+![Final scene before and after editing DREAM STAGE to SAEGIM STUDIO as real text.](docs/assets/rich-title-edit.gif)
+
+`DREAM STAGE` → `SAEGIM STUDIO`, edited through the app and checked after save/reload. The raster title was added to the input before analysis; the reconstruction stores it as real editable text. Character geometry and motion stay unchanged. [Title-edited project](examples/rich-motion/title-edited.json).
+
+#### Final 2 seconds: change the palette
+
+![Final scene before and after changing cyan and teal paints to warm orange while retaining fitted gradient stops.](docs/assets/rich-color-edit.gif)
+
+A **script-assisted palette edit** changes cyan/teal paint and gradient-stop colors to warm orange, including the cap, shoes, companion and matching stage accents. It retains geometry, gradient coordinates, stop offsets and timing. This is a palette rule, not automatic semantic clothing selection. [Color-edited project and method](examples/rich-motion/README.md#palette-edit).
+
+**Try it:** the three importable projects cover the final **6.0417–8.0417 seconds** of the source. The conversion GIF covers the **whole film**. Thin closed-eye and mouth lines disappear during the wide-shot hop; contour edges and complex lighting still differ from the source; this is an automatic editing draft, not recovered source artwork.
+
+<details>
+<summary>Earlier simple character example</summary>
+
 ### Character animation with gradients
 
 This example starts with an **AI-generated character video from Higgsfield / Seedance 2.5**. A raster `HELLO` title was added before analysis. Saegim then analyzed the complete 4.04-second clip in high mode on macOS; the output redraws SVG shapes, fitted gradients and real text at the observed frames.
@@ -34,6 +61,11 @@ The right side is the actual automatic draft, not an embedded source video. Thin
 ![The character's orange cap and jacket become teal while the background and skin stay unchanged.](docs/assets/character-color-edit.gif)
 
 Orange → teal using a **script-assisted paint edit** across the measured fills and gradient stops. Gradient positions, offsets and timing are retained. This is a documented palette transform, not automatic clothing selection or the app's solid-fill control. [Color-edited project and method](examples/character-gradient/README.md#palette-edit).
+
+</details>
+
+<details>
+<summary>Basic shape example</summary>
 
 ### Basic shapes
 
@@ -58,6 +90,8 @@ Select the text → edit **텍스트** → export. Here, `HELLO FRAME` becomes `
 Select a shape → change **채우기** (fill). The circle becomes teal (`#25c6b5`) and the rectangle violet (`#9b87f5`), while the title, geometry and motion stay unchanged. This demonstrates solid fill editing. [Open the color-edited project](examples/reconstruction-demo/colors-edited.json).
 
 **Try it:** after setup, use **프로젝트 열기** (Open project) to load [the unedited reconstruction](examples/reconstruction-demo/project.json). All three projects are included. [Source, steps and verification](examples/reconstruction-demo/README.md).
+
+</details>
 
 <details>
 <summary>See the editor interface</summary>

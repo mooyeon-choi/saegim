@@ -1,0 +1,61 @@
+{
+  "provider": "Higgsfield",
+  "model": "Seedance 2.5",
+  "date": "2026-10-25",
+  "parameters": {
+    "model": "seedance_2_5",
+    "mode": "omni_reference",
+    "duration": 8,
+    "aspect_ratio": "16:9",
+    "resolution": "720p",
+    "generate_audio": false,
+    "bitrate_mode": "high",
+    "count": 1,
+    "prompt": "Create one polished EIGHT-SECOND editorial motion-graphics film using these three original reference images for character, design and lighting continuity. This must have the richness and dynamism of a premium animated title sequence, with actual articulated character animation and three dramatically different compositions, NOT a waving mascot on a blank background and NOT a slideshow.\n\nDESIGN: Preserve the same appealing original creator: big peach rounded-square head, large flat white eyes with dark pupils, tiny coral nose, navy hair, folded TEAL beanie, CREAM jacket, coral shirt, navy trousers and oversized teal shoes. Keep the tiny floating turquoise diamond AI companion with two white eyes and a magenta square antenna. Giant lavender monitor, orange rocket, ivory/lavender cloud, chunky yellow/teal stairs and pink arch from the references. Bold 2D-designed geometric silhouettes with controlled 2.5D volume made of broad smooth gradients. Deep indigo stage, cobalt and violet spotlights, hot magenta rim lights and colored reflections on the floor. No photorealism, no tiny textures, no ink outlines. Shapes stay clean and solid during action. Thick readable eyebrows and mouth, fully visible hands. Rich, layered foreground, midground and background with clear color separation.\n\nTIMELINE:\n0.00-1.70 seconds — Extreme three-quarter close-up: creator's smiling face, TEAL cap and large open hand fill the frame. The small AI companion squashes then springs off the palm, producing a clean glowing gold ring. Face reacts with anticipation and delight; fingers and torso have a readable articulated movement. A violet spotlight sweeps behind.\n1.70-4.20 seconds — HARD CUT to a low-angle wide shot. Creator LEFT flicks the ring into the lavender monitor RIGHT. Ring expands outward. The orange rocket bursts out of the monitor in a crisp curve, followed by a large bouncing cloud and two golden stars. Creator leans back then catches balance; AI follows the arc. Distinct staggered entrances, squash-and-stretch, quick overshoot and settle. Bright gold light briefly falls across the creator and stage floor.\n4.20-5.00 seconds — Rocket passes very close across the camera from RIGHT to LEFT as a strong foreground occlusion wipe. Its orange body and white window momentarily fill the frame. Transition has a clear directional motion, not a dissolve.\n5.00-8.00 seconds — Reveal a final wider hero tableau. Creator LEFT makes one joyful small hop and landing with both arms open. Monitor RIGHT now emits chunky teal and yellow stairs, a lavender/pink arch, large cloud and orbiting stars. AI bounces beside the raised hand. Camera pulls back quickly then locks. Finish on a stable beautiful final composition for at least 1.2 seconds, with subtle breathing and only a few pieces of confetti. Keep a broad clean dark navy strip across the TOP 18 percent of the frame, free of characters, stars, beams and confetti, for a large editable title to be composited later.\n\nPACING: anticipation -> quick action -> overshoot -> brief readable hold. Strong pose silhouettes, clear identity across the cut, no body melting, no sliding feet, no duplicated characters. Use only a few large dream objects, not particle noise. Broad smooth shading, clean highlights, smooth rounded contours. Dark rich background, not empty beige. Do not add ANY lettering, logos, numbers, credits or captions. Do not render any reference image as a still panel. Keep the full eight-second story with a resolved final pose."
+  },
+  "referenceImages": [
+    {
+      "description": "shot 01 spark",
+      "sha256": "8f7df56fd0b71df6094051f69dfefa322a180c5b37d9ac70674b3ec561a865b5",
+      "origin": "Original Dream Stage styleframe generated in an earlier session; used as an image reference, not a third-party film frame."
+    },
+    {
+      "description": "shot 02 unfold",
+      "sha256": "0bd0a8ef5fc2019bbacfbf18748f84cf1a40647c048949dc05bc4aa6a51bfa95",
+      "origin": "Original Dream Stage styleframe generated in an earlier session; used as an image reference, not a third-party film frame."
+    },
+    {
+      "description": "shot 03 dream stage",
+      "sha256": "4921dc9acd4d739754b92e6c04fd36e68c22d960d424bb8cdea322b6e9fa7193",
+      "origin": "Original Dream Stage styleframe generated in an earlier session; used as an image reference, not a third-party film frame."
+    }
+  ],
+  "referenceAvailability": "Original reference styleframes are retained privately; prompt-only regeneration will not reproduce identical pixels. The complete prepared input video is included here so generation is not needed to try Saegim.",
+  "preparation": {
+    "generated": {
+      "width": 1280,
+      "height": 720,
+      "fps": 24.0,
+      "frames": 193,
+      "duration": 8.041666666666666,
+      "sha256": "c63bf46e266b069927a9c401e1ad67c6fe505e662c1619c3cce7b6d326434b14"
+    },
+    "input": {
+      "width": 640,
+      "height": 360,
+      "fps": 24.0,
+      "frames": 193,
+      "duration": 8.041666666666666,
+      "sha256": "89a04fdf7ec01d05716fd7b6e711326e5d4ca6a269556d7762657e9717c280b6"
+    },
+    "title": {
+      "text": "DREAM STAGE",
+      "startFrame": 145,
+      "start": 6.041666666666667,
+      "end": 8.041666666666666,
+      "compositedBeforeAnalysis": true
+    },
+    "preparation": "Full generated clip downscaled to 640px width; raster title composited over final 2 seconds before local analysis; audio omitted; no retiming, scene removal or geometry cleanup."
+  },
+  "generationAndReconstruction": "Higgsfield generated the input only. Saegim used local analysis to reconstruct SVG; generated source pixels are not embedded in the reconstructed stage."
+}

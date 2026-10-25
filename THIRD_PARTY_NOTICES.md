@@ -19,4 +19,6 @@ The public source package excludes user-uploaded videos and private case-specifi
 
 The separate `character-*.gif` documentation assets and `examples/character-gradient/` use a character video generated specifically for this demonstration with Higgsfield / Seedance 2.5, without reference media. A title was composited before local analysis. These are AI-derived media examples, not the independently drawn fixture or a third-party reference film. [Generation details and transformations](examples/character-gradient/README.md) accompany the assets. No font binaries or service credentials are embedded in these examples.
 
+The `rich-*.gif` assets and `examples/rich-motion/` use a separate Higgsfield / Seedance 2.5 film made with three original Dream Stage styleframes from earlier work as references. It is a stylized 2.5D AI-derived example. The complete prepared source is included; the editable JSON examples cover its final two seconds. No third-party reference film is included. [Source preparation and verification](examples/rich-motion/README.md).
+
 Saegim's original project source is distributed under the [MIT License](LICENSE). Bundled fonts and dependencies retain the separate licenses noted above.

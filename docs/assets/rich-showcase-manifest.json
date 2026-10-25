@@ -1,0 +1,338 @@
+{
+  "source": {
+    "provider": "Higgsfield",
+    "model": "Seedance 2.5",
+    "date": "2026-10-25",
+    "file": "examples/rich-motion/rich-source.mp4",
+    "provenance": "examples/rich-motion/generation.json",
+    "referenceMedia": "Three original Dream Stage styleframes from earlier work; no third-party film uploaded.",
+    "generated": {
+      "width": 1280,
+      "height": 720,
+      "fps": 24.0,
+      "frames": 193,
+      "duration": 8.041666666666666,
+      "sha256": "c63bf46e266b069927a9c401e1ad67c6fe505e662c1619c3cce7b6d326434b14"
+    },
+    "input": {
+      "width": 640,
+      "height": 360,
+      "fps": 24.0,
+      "frames": 193,
+      "duration": 8.041666666666666,
+      "sha256": "89a04fdf7ec01d05716fd7b6e711326e5d4ca6a269556d7762657e9717c280b6"
+    },
+    "title": {
+      "text": "DREAM STAGE",
+      "startFrame": 145,
+      "start": 6.041666666666667,
+      "end": 8.041666666666666,
+      "compositedBeforeAnalysis": true
+    },
+    "preparation": "Full generated clip downscaled to 640px width; raster title composited over final 2 seconds before local analysis; audio omitted; no retiming, scene removal or geometry cleanup."
+  },
+  "analysis": {
+    "passed": true,
+    "sourceSHA256": "89a04fdf7ec01d05716fd7b6e711326e5d4ca6a269556d7762657e9717c280b6",
+    "duration": 8.041666666666666,
+    "sourceFrames": 193,
+    "observedSamples": 193,
+    "segments": 4,
+    "maxSegmentNodes": 2395,
+    "nodesAcrossSegments": 7189,
+    "textNodes": 1,
+    "cuts": [
+      2.25,
+      4.333333333333333
+    ],
+    "projectBytes": 25682738,
+    "originalMediaEmbedded": false,
+    "quality": "high",
+    "analysisProjectSHA256BeforeFrameRedraw": "db9661d07a707b05e9e8af9469de3bd2dca11e11b0b09d0558bb9001ab711788",
+    "processingFrameRanges": [
+      [
+        0,
+        49
+      ],
+      [
+        49,
+        97
+      ],
+      [
+        97,
+        145
+      ],
+      [
+        145,
+        193
+      ]
+    ],
+    "playbackMode": "frames",
+    "fullProjectPublished": false,
+    "manualGeometryCleanup": false,
+    "ocr": "macOS Vision"
+  },
+  "editableExcerpt": {
+    "sourceStart": 6.041666666666667,
+    "sourceEnd": 8.041666666666666,
+    "startFrameInclusive": 145,
+    "endFrameExclusive": 193,
+    "duration": 1.9999999999999991,
+    "sampleCount": 48,
+    "width": 640,
+    "height": 360,
+    "nodes": 1709,
+    "realTextNodes": 1,
+    "pathNodes": 1708,
+    "nodesWithBaseGradient": 1449,
+    "observationsWithGradient": 44770
+  },
+  "titleEdit": {
+    "passed": true,
+    "titleId": "node-1709",
+    "before": "DREAM STAGE",
+    "after": "SAEGIM STUDIO",
+    "editedThroughUI": true,
+    "reloadPreserved": true,
+    "geometryMotionIdsLayerOrderUnchanged": true,
+    "unselectedNodesUnchanged": true,
+    "frameRedraw": true,
+    "errors": []
+  },
+  "colorEdit": {
+    "passed": true,
+    "method": "Script-assisted hue rotation of measured cyan/teal paints in app schema 1, not semantic material detection or the solid-fill UI control. HLS hue -160 degrees; retain HLS lightness and saturation. Only original hue 154.8..201.6 degrees, saturation >0.35 and lightness 0.10..0.90 are changed. Same fixed rule at every observation.",
+    "changedGradientStopValues": 7961,
+    "geometryMotionTimingIdsLayerOrderGradientCoordinatesOffsetsAndOpacityPreserved": true,
+    "unselectedNodesUnchanged": true,
+    "changedNodeCount": 819
+  },
+  "projects": [
+    {
+      "file": "project.json",
+      "bytes": 8073346,
+      "decodedBytes": 30463908,
+      "nodes": 1709,
+      "schemaVersion": 2,
+      "segments": 1,
+      "exactDecodedProject": true,
+      "equivalentSVGAt11Seeks": true,
+      "sha256": "a7950a4cb238fd18918e2f9ec647bb0a2ea84f75d408827600e68098e3996215"
+    },
+    {
+      "file": "title-edited.json",
+      "bytes": 8073358,
+      "decodedBytes": 30463910,
+      "nodes": 1709,
+      "schemaVersion": 2,
+      "segments": 1,
+      "exactDecodedProject": true,
+      "equivalentSVGAt11Seeks": true,
+      "sha256": "87fa51dccdd98ccc88949c25f6ee02aa38765c5f2568d7f9f47742b78ac2508f"
+    },
+    {
+      "file": "colors-edited.json",
+      "bytes": 8073486,
+      "decodedBytes": 30463908,
+      "nodes": 1709,
+      "schemaVersion": 2,
+      "segments": 1,
+      "exactDecodedProject": true,
+      "equivalentSVGAt11Seeks": true,
+      "sha256": "7f8996c8fb768852dfe4b7890dcac08e6f3c801853e942d645b98755e3864637"
+    }
+  ],
+  "gifs": [
+    {
+      "file": "rich-conversion.gif",
+      "frames": 161,
+      "durationMs": 8050,
+      "size": [
+        768,
+        274
+      ],
+      "bytes": 6803400,
+      "leftSHA256": "89a04fdf7ec01d05716fd7b6e711326e5d4ca6a269556d7762657e9717c280b6",
+      "rightSHA256": "43d09b7ce35ec5594ae0d0afbf54ad51cc7451dec122440d0b0a8d2031d83052",
+      "gifSHA256": "c378e36a0c21ccc4d9212073411b3ca447599c85ec62511dac7d2af79673fa5b",
+      "allFramesDecoded": true
+    },
+    {
+      "file": "rich-title-edit.gif",
+      "frames": 40,
+      "durationMs": 2000,
+      "size": [
+        768,
+        274
+      ],
+      "bytes": 3023967,
+      "leftSHA256": "94fc312e0efb58c8381584761767435546e5a373c97aefbd5128a043755b7ec2",
+      "rightSHA256": "9cd0daa044da22f2127664d2448ea241fcd17bcadabccf0d80caa0a0fef81511",
+      "gifSHA256": "ab51041fc654b16c5342fe0f027e8d3969a683d3a60d9323007298c8e8502d00",
+      "allFramesDecoded": true
+    },
+    {
+      "file": "rich-color-edit.gif",
+      "frames": 40,
+      "durationMs": 2000,
+      "size": [
+        768,
+        274
+      ],
+      "bytes": 3010535,
+      "leftSHA256": "94fc312e0efb58c8381584761767435546e5a373c97aefbd5128a043755b7ec2",
+      "rightSHA256": "d44370ae1ec82c1344ebbbed7df7f153d10f262aeb9b2ab0ad17e11bdfd0d594",
+      "gifSHA256": "05811b54dbc60b99237df1b5c2c199a974d4be3359f9c90b27a9d3d8abe0bbfb",
+      "allFramesDecoded": true
+    }
+  ],
+  "verification": {
+    "publicEditor": {
+      "passed": true,
+      "checked": [
+        {
+          "file": "project.json",
+          "imported": true,
+          "realEditableTitle": true,
+          "frameRedraw": true
+        },
+        {
+          "file": "title-edited.json",
+          "imported": true,
+          "realEditableTitle": true,
+          "frameRedraw": true
+        },
+        {
+          "file": "colors-edited.json",
+          "imported": true,
+          "realEditableTitle": true,
+          "frameRedraw": true
+        }
+      ],
+      "colorReloadAndExport": true,
+      "errors": []
+    },
+    "publicRoundtrip": {
+      "passed": true,
+      "colorNodesEqual": true,
+      "compositionAndSceneTemporalEqual": true
+    },
+    "renders": [
+      {
+        "scope": "complete film",
+        "variant": "full-render",
+        "passed": true,
+        "projectSHA256": "c4983ae31a98ce60474f101a87d698cc99ac0b94769464a4d0af1eca7dd6d5e7",
+        "htmlSHA256": "7a3b50949baa308eaafaf0a9597b2bd08bb990f03e1f17764afd31d51f08509d",
+        "duration": 8.041666666666666,
+        "schemaVersion": 2,
+        "width": 384,
+        "height": 216,
+        "fps": 24,
+        "frames": 193,
+        "decodedFrames": 193,
+        "encodedDuration": 8.041666666666666,
+        "browserErrors": [],
+        "externalRequests": [],
+        "videoSHA256": "43d09b7ce35ec5594ae0d0afbf54ad51cc7451dec122440d0b0a8d2031d83052"
+      },
+      {
+        "scope": "final 2 seconds",
+        "variant": "render",
+        "passed": true,
+        "projectSHA256": "a7950a4cb238fd18918e2f9ec647bb0a2ea84f75d408827600e68098e3996215",
+        "htmlSHA256": "4263047ef1192cf603931c9589bde64b37479ee6bfef1dd716d96f49f5c044d7",
+        "duration": 1.9999999999999991,
+        "schemaVersion": 2,
+        "width": 384,
+        "height": 216,
+        "fps": 20,
+        "frames": 40,
+        "decodedFrames": 40,
+        "encodedDuration": 2,
+        "browserErrors": [],
+        "externalRequests": [],
+        "videoSHA256": "94fc312e0efb58c8381584761767435546e5a373c97aefbd5128a043755b7ec2"
+      },
+      {
+        "scope": "final 2 seconds",
+        "variant": "title-render",
+        "passed": true,
+        "projectSHA256": "87fa51dccdd98ccc88949c25f6ee02aa38765c5f2568d7f9f47742b78ac2508f",
+        "htmlSHA256": "65008878ea3e12a26f18052512446e0f1ac2dea6e356f7a787e7d4defce349b9",
+        "duration": 1.9999999999999991,
+        "schemaVersion": 2,
+        "width": 384,
+        "height": 216,
+        "fps": 20,
+        "frames": 40,
+        "decodedFrames": 40,
+        "encodedDuration": 2,
+        "browserErrors": [],
+        "externalRequests": [],
+        "videoSHA256": "9cd0daa044da22f2127664d2448ea241fcd17bcadabccf0d80caa0a0fef81511"
+      },
+      {
+        "scope": "final 2 seconds",
+        "variant": "color-render",
+        "passed": true,
+        "projectSHA256": "7f8996c8fb768852dfe4b7890dcac08e6f3c801853e942d645b98755e3864637",
+        "htmlSHA256": "af5d9cf0526d9b75167bc6e3005b33acf77646910b572ca92d67888199f62a65",
+        "duration": 1.9999999999999991,
+        "schemaVersion": 2,
+        "width": 384,
+        "height": 216,
+        "fps": 20,
+        "frames": 40,
+        "decodedFrames": 40,
+        "encodedDuration": 2,
+        "browserErrors": [],
+        "externalRequests": [],
+        "videoSHA256": "d44370ae1ec82c1344ebbbed7df7f153d10f262aeb9b2ab0ad17e11bdfd0d594"
+      }
+    ],
+    "visualReview": {
+      "fullSourceTimesSeconds": [
+        0,
+        0.75,
+        1.5,
+        2,
+        2.05,
+        2.2,
+        2.25,
+        2.8,
+        3.5,
+        4,
+        4.05,
+        4.25,
+        4.3,
+        4.35,
+        4.9,
+        5.6,
+        6,
+        6.05,
+        7,
+        8
+      ],
+      "editLocalTimesSeconds": [
+        0,
+        0.25,
+        0.5,
+        0.75,
+        1,
+        1.25,
+        1.5,
+        1.95
+      ],
+      "sourceOffsetForEdits": 6.041666666666667,
+      "method": "20 full-film sample times including endpoints, detected cuts, processing boundaries and fast motion; 8 samples of each edit; enlarged face/stage crops. Not an every-frame visual review."
+    },
+    "observedDefects": [
+      "Soft shading and glows become visible color bands and patches; cap, hand and companion rim lights are thicker or rougher than the source.",
+      "Thin facial features disappear in some wide-shot observations: the closed eyes and mouth around the 4.9-second hop are lost. Small companion eyes can also disappear.",
+      "Rocket, cloud, stair edges and floor reflections are simplified; reflected light looks patchier than the source.",
+      "The OCR title is real text but its fitted font weight/outline differs from the composited source typography.",
+      "The palette rule changes all selected cyan/teal accents, while blue/purple highlights and reflections outside the hue interval remain cool. It is not semantic material replacement."
+    ]
+  }
+}

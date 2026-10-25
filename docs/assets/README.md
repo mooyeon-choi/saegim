@@ -2,6 +2,18 @@
 
 These are deliberately selected public documentation examples. User-uploaded reference videos and ordinary generated research output remain excluded.
 
+## Rich character motion
+
+The `rich-*` assets show a new stylized 2.5D film generated with Higgsfield / Seedance 2.5, using three original Dream Stage styleframes from earlier work. Its close-up, rocket reveal, foreground wipe and final tableau include multiple objects, broad gradients, rim lights and reflections. [Source, projects and edit method](../../examples/rich-motion/README.md).
+
+| Asset | Left | Right | Range |
+| --- | --- | --- | --- |
+| `rich-conversion.gif` | Prepared AI source | Actual SVG reconstruction with frame redraw | Full 8.0417-second source |
+| `rich-title-edit.gif` | Unedited SVG | DREAM STAGE → SAEGIM STUDIO, edited in the app | Final 2 seconds |
+| `rich-color-edit.gif` | Unedited SVG | Cyan/teal → warm orange paint and gradient-stop edit | Final 2 seconds |
+
+These 768 × 274 silent GIFs include comparison labels and use 20 FPS. Full conversion has 161 frames / 8.05 seconds; each edit has 40 frames / 2 seconds. Analysis uses all 193 native timestamps at 24 FPS after downscaling the source to 640 × 360. [Rich asset manifest](rich-showcase-manifest.json). The generated input and the fitted SVG have visible differences; these are actual automatic drafts.
+
 ## Character and gradients
 
 The three `character-*` GIFs use an original character clip generated specifically for this demonstration with Higgsfield / Seedance 2.5, followed by local video analysis and actual engine rendering. A raster title was added before analysis. See [the character example](../../examples/character-gradient/README.md) for the source MP4, prompt, importable projects, edit method and remaining defects.
