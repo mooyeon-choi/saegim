@@ -1,0 +1,227 @@
+{
+  "source": {
+    "provider": "Higgsfield",
+    "model": "Seedance 2.5",
+    "generationDate": "2026-10-25",
+    "referenceMedia": false,
+    "file": "examples/character-gradient/character-source.mp4",
+    "originalGenerated": {
+      "width": 854,
+      "height": 480,
+      "fps": 24.0,
+      "frames": 97,
+      "duration": 4.041666666666667,
+      "sha256": "00c2d2b86b19a0f6ce8a74fba34219f833b92e4e204c248df02ab322c10b93d5"
+    },
+    "preparedInput": {
+      "width": 854,
+      "height": 480,
+      "fps": 24.0,
+      "frames": 97,
+      "duration": 4.041666666666667,
+      "sha256": "4c5c5eec7033ff0f8c996bfe7daf513f87684b28d5bc36d361932f2e7d96e568"
+    },
+    "preparation": "Entire generated video retained at native 854px width; HELLO raster title composited before analysis; no trim, stabilization, contour cleanup or background replacement.",
+    "prompt": "examples/character-gradient/generation.json"
+  },
+  "analysis": {
+    "quality": "high",
+    "sampleFps": 24,
+    "sampleCount": 97,
+    "width": 854,
+    "height": 480,
+    "duration": 4.041666666666667,
+    "nodes": 996,
+    "pathNodes": 995,
+    "realTextNodes": 1,
+    "nodesWithBaseGradient": 653,
+    "observationsWithGradient": 21684,
+    "ocr": "macOS Vision",
+    "manualGeometryCleanup": false,
+    "cuts": [],
+    "playbackMode": "frames (enabled through editor after analysis)",
+    "warnings": [
+      "정밀 색상 영역·선형/방사형 그라데이션으로 만든 벡터 초안입니다. 원본의 3D 모델·조명·리깅·숨은 영역을 복구한 결과는 아닙니다.",
+      "관측 시점의 벡터 상태를 보존하며 같은 장면 안의 인접 관측 화면을 혼합합니다. 빠른 움직임에는 잔상이 보일 수 있습니다.",
+      "원본 폰트 이름·레이어 순서·임의 아이콘의 회전·마스크는 자동 복원하지 않습니다. 사각형의 회전은 윤곽에서 추정하고, 패스 모양은 관측 시점마다 바뀌는 벡터로 보존합니다. 오디오는 내보내기에 포함되지 않습니다.",
+      "정밀 모드는 관측한 윤곽·색상·그라데이션을 프레임별로 보존합니다. 같은 물체가 여러 편집 영역으로 분리될 수 있으며 파일이 커질 수 있습니다.",
+      "작은 윤곽이 많이 검출되었습니다. 글자 미인식·복잡한 배경 때문에 한 요소가 여러 조각으로 분리되었을 수 있습니다.",
+      "장면 컷은 원본의 저해상도 색상·움직임 변화로 보수적으로 추정합니다. 비슷한 색의 컷이나 복잡한 전환은 놓칠 수 있으므로 원본과 확인하세요."
+    ]
+  },
+  "titleEdit": {
+    "passed": true,
+    "titleId": "node-996",
+    "before": "HELLO",
+    "after": "SAEGIM",
+    "editedThroughUI": true,
+    "reloadPreserved": true,
+    "geometryMotionIdsLayerOrderUnchanged": true,
+    "unselectedNodesUnchanged": true,
+    "frameRedraw": true,
+    "errors": []
+  },
+  "colorEdit": {
+    "passed": true,
+    "method": "Script-assisted hue rotation of measured orange paints in app schema 1, not semantic material detection or the solid-fill UI control. HLS hue +150 degrees; retain HLS lightness and saturation. Only original hue 0..37.8 degrees, saturation >0.42 and lightness 0.12..0.78 are changed. Same fixed rule at every observation.",
+    "changedGradientStopValues": 22559,
+    "geometryMotionTimingIdsLayerOrderGradientCoordinatesOffsetsAndOpacityPreserved": true,
+    "unselectedNodesUnchanged": true,
+    "changedNodeCount": 831
+  },
+  "projects": [
+    {
+      "file": "project.json",
+      "bytes": 3555914,
+      "decodedBytes": 14079228,
+      "nodes": 996,
+      "schemaVersion": 2,
+      "segments": 1,
+      "exactDecodedProject": true,
+      "equivalentSVGAt11Seeks": true,
+      "sha256": "7bf8f3f86b4b10276cb00860d477210d574110aa2aea12d9016f17b75b165643"
+    },
+    {
+      "file": "title-edited.json",
+      "bytes": 3555922,
+      "decodedBytes": 14079229,
+      "nodes": 996,
+      "schemaVersion": 2,
+      "segments": 1,
+      "exactDecodedProject": true,
+      "equivalentSVGAt11Seeks": true,
+      "sha256": "e7b2d4d2d64475fecbe6bc5df9beca5d15f30768b25e75f90764016c4f68a49e"
+    },
+    {
+      "file": "colors-edited.json",
+      "bytes": 3565486,
+      "decodedBytes": 14079228,
+      "nodes": 996,
+      "schemaVersion": 2,
+      "segments": 1,
+      "exactDecodedProject": true,
+      "equivalentSVGAt11Seeks": true,
+      "sha256": "3a5c50be29cb32e9d8c9f5cc8d9345b0f4591cd10104f83c9ec2867d87027e2e"
+    }
+  ],
+  "gifs": [
+    {
+      "file": "character-conversion.gif",
+      "frames": 81,
+      "durationMs": 4050,
+      "size": [
+        960,
+        328
+      ],
+      "bytes": 2248755,
+      "leftSHA256": "4c5c5eec7033ff0f8c996bfe7daf513f87684b28d5bc36d361932f2e7d96e568",
+      "rightSHA256": "bde7759d564ab4ca9f315875eed31a5e97a6b2e2c0845bf643c5ca185d387dd5",
+      "gifSHA256": "517484131f5ecf87466a97c5f80389b201ceff2faeabf0a4a3ce8b87ef77fbe8",
+      "allFramesDecoded": true
+    },
+    {
+      "file": "character-title-edit.gif",
+      "frames": 81,
+      "durationMs": 4050,
+      "size": [
+        960,
+        328
+      ],
+      "bytes": 2352885,
+      "leftSHA256": "bde7759d564ab4ca9f315875eed31a5e97a6b2e2c0845bf643c5ca185d387dd5",
+      "rightSHA256": "d603a4fcb992996fb75cf214d2051f9fd364aa4912a5f18c92ff55561ede8c41",
+      "gifSHA256": "dc22e73904d55cd29f4dd972b75f21068eb07d3915dc6f55224a13f42c97edfc",
+      "allFramesDecoded": true
+    },
+    {
+      "file": "character-color-edit.gif",
+      "frames": 81,
+      "durationMs": 4050,
+      "size": [
+        960,
+        328
+      ],
+      "bytes": 2323530,
+      "leftSHA256": "bde7759d564ab4ca9f315875eed31a5e97a6b2e2c0845bf643c5ca185d387dd5",
+      "rightSHA256": "1a41bf308b64c351f960f0beab6ac43a1cb7932b32ec6c5c35ac5c4ac4955fe0",
+      "gifSHA256": "81aaed3963b49cbe38c36966f98050f5d0fc8f56769894e6d5630fd7cc258f72",
+      "allFramesDecoded": true
+    }
+  ],
+  "verification": {
+    "publicProjectsImportedInEditor": true,
+    "publicColorProjectReloadedAndReexported": true,
+    "reexportedNodesAndTemporalEqual": true,
+    "renders": [
+      {
+        "passed": true,
+        "projectSHA256": "7bf8f3f86b4b10276cb00860d477210d574110aa2aea12d9016f17b75b165643",
+        "htmlSHA256": "2d219c0b459a99b5fd2ce7b03ca6ab2eff60a077f77b15d248eb42852771d73c",
+        "duration": 4.041666666666667,
+        "schemaVersion": 2,
+        "width": 480,
+        "height": 270,
+        "fps": 20,
+        "frames": 81,
+        "decodedFrames": 81,
+        "encodedDuration": 4.05,
+        "browserErrors": [],
+        "externalRequests": [],
+        "videoSHA256": "bde7759d564ab4ca9f315875eed31a5e97a6b2e2c0845bf643c5ca185d387dd5"
+      },
+      {
+        "passed": true,
+        "projectSHA256": "e7b2d4d2d64475fecbe6bc5df9beca5d15f30768b25e75f90764016c4f68a49e",
+        "htmlSHA256": "5a30b27191aa4b6ddad495e298536f1e511b37a2346ec799b9910843da8b9df4",
+        "duration": 4.041666666666667,
+        "schemaVersion": 2,
+        "width": 480,
+        "height": 270,
+        "fps": 20,
+        "frames": 81,
+        "decodedFrames": 81,
+        "encodedDuration": 4.05,
+        "browserErrors": [],
+        "externalRequests": [],
+        "videoSHA256": "d603a4fcb992996fb75cf214d2051f9fd364aa4912a5f18c92ff55561ede8c41"
+      },
+      {
+        "passed": true,
+        "projectSHA256": "3a5c50be29cb32e9d8c9f5cc8d9345b0f4591cd10104f83c9ec2867d87027e2e",
+        "htmlSHA256": "cb8c4b6a1c8215bc37cef9f11e8c6ae7d21d0ccbe62aa414467132ff01f4c8bf",
+        "duration": 4.041666666666667,
+        "schemaVersion": 2,
+        "width": 480,
+        "height": 270,
+        "fps": 20,
+        "frames": 81,
+        "decodedFrames": 81,
+        "encodedDuration": 4.05,
+        "browserErrors": [],
+        "externalRequests": [],
+        "videoSHA256": "1a41bf308b64c351f960f0beab6ac43a1cb7932b32ec6c5c35ac5c4ac4955fe0"
+      }
+    ],
+    "visualReviewTimesSeconds": [
+      0,
+      0.35,
+      0.7,
+      1.05,
+      1.4,
+      1.75,
+      2.1,
+      2.45,
+      2.8,
+      3.15,
+      3.5,
+      4.0
+    ],
+    "visualReview": "12 sampled source-versus-render timestamps and enlarged character crops; not every frame visually reviewed.",
+    "observedDefects": [
+      "Thin nose/mouth lines are weakened or lost; an eye pupil is missing in some sampled frames.",
+      "Cap, clothing and shoe outlines remain rough; subtle source shading and fine lines differ.",
+      "The generated source performs a small repeating arm movement, not a recovered skeletal animation."
+    ],
+    "lowerResolutionAttempt": "A 480px-wide trial lost more small facial detail. The published version uses the complete native 854px-wide input."
+  }
+}

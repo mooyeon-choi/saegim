@@ -15,6 +15,8 @@ JavaScript dependencies and versions are recorded in `package.json` and `package
 
 ## Input and output media
 
-The public source package excludes user-uploaded videos and private case-specific masks, observations and renders. The deliberately selected GIFs in `docs/assets/` and projects in `examples/reconstruction-demo/` use the repository's independently drawn synthetic fixture. They are documentation examples distributed under this project's MIT license; see [their provenance](examples/reconstruction-demo/README.md). They contain no third-party source video or embedded font binaries.
+The public source package excludes user-uploaded videos and private case-specific masks, observations and renders. The basic shape GIFs (`conversion.gif`, `title-edit.gif`, `color-edit.gif`) in `docs/assets/` and projects in `examples/reconstruction-demo/` use the repository's independently drawn synthetic fixture. They are documentation examples distributed under this project's MIT license; see [their provenance](examples/reconstruction-demo/README.md). They contain no third-party source video or embedded font binaries.
+
+The separate `character-*.gif` documentation assets and `examples/character-gradient/` use a character video generated specifically for this demonstration with Higgsfield / Seedance 2.5, without reference media. A title was composited before local analysis. These are AI-derived media examples, not the independently drawn fixture or a third-party reference film. [Generation details and transformations](examples/character-gradient/README.md) accompany the assets. No font binaries or service credentials are embedded in these examples.
 
 Saegim's original project source is distributed under the [MIT License](LICENSE). Bundled fonts and dependencies retain the separate licenses noted above.

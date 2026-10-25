@@ -11,21 +11,47 @@ Saegim turns observations from a local 2D video into a project containing text, 
 
 ## See it in action
 
-One local video → editable elements → a new title or palette. These are actual engine renders of a **3-second synthetic clip**, analyzed in standard mode at 30 samples/second on macOS. Font matching, color and edge differences remain; this simple example does not represent every video's reconstruction quality.
+Start with a local video, inspect the SVG reconstruction, then edit the title or palette. These examples show actual engine renders and their remaining differences.
 
-### 1. Convert video to editable SVG
+### Character animation with gradients
+
+This example starts with an **AI-generated character video from Higgsfield / Seedance 2.5**. A raster `HELLO` title was added before analysis. Saegim then analyzed the complete 4.04-second clip in high mode on macOS; the output redraws SVG shapes, fitted gradients and real text at the observed frames.
+
+#### Original video → editable reconstruction
+
+![AI-generated character source on the left; actual SVG reconstruction of the waving character, shading and title on the right.](docs/assets/character-conversion.gif)
+
+The right side is the actual automatic draft, not an embedded source video. Thin nose/mouth lines are often lost, and some eye details and cap edges remain imperfect. Detected color regions are not semantic body parts or a recovered character rig. [Source video, projects and verification](examples/character-gradient/README.md).
+
+#### Edit the title
+
+![Character animation before and after changing HELLO to SAEGIM as real text.](docs/assets/character-title-edit.gif)
+
+`HELLO` → `SAEGIM`, edited through the app and checked after save/reload. Character geometry, gradients and motion stay unchanged. [Title-edited project](examples/character-gradient/title-edited.json).
+
+#### Edit the character's palette
+
+![The character's orange cap and jacket become teal while the background and skin stay unchanged.](docs/assets/character-color-edit.gif)
+
+Orange → teal using a **script-assisted paint edit** across the measured fills and gradient stops. Gradient positions, offsets and timing are retained. This is a documented palette transform, not automatic clothing selection or the app's solid-fill control. [Color-edited project and method](examples/character-gradient/README.md#palette-edit).
+
+### Basic shapes
+
+The following smaller example uses a separately drawn 3-second fixture, analyzed in standard mode at 30 samples/second. It needs no generated media.
+
+#### 1. Convert video to editable SVG
 
 ![Left: source video. Right: automatically reconstructed text, moving circle and rectangle.](docs/assets/conversion.gif)
 
 **Left:** source video. **Right:** automatic reconstruction as **one text element, one ellipse and one rectangle**. No manual geometry cleanup was applied. The exported scene contains SVG elements, not a copy of the video.
 
-### 2. Change the title, keep the motion
+#### 2. Change the title, keep the motion
 
 ![Before and after changing HELLO FRAME to HELLO SAEGIM, with the shapes following the same motion.](docs/assets/title-edit.gif)
 
 Select the text → edit **텍스트** → export. Here, `HELLO FRAME` becomes `HELLO SAEGIM`; the shapes and motion stay unchanged. [Open the edited project](examples/reconstruction-demo/title-edited.json).
 
-### 3. Change the colors
+#### 3. Change the colors
 
 ![Before and after changing the pink circle to teal and the lime rectangle to violet.](docs/assets/color-edit.gif)
 
@@ -112,7 +138,7 @@ The skills need this repository and its dependencies; copying a skill folder alo
 | `server/` | Local FastAPI analysis, OCR, contour/color fitting and cut detection |
 | `scripts/` | Analysis, rendering, comparison, SVG extraction and source packaging |
 | `.agents/skills/` | Reconstruction and iterative part-matching instructions |
-| `examples/` | Authored fixtures and reviewed synthetic reconstruction/edit examples |
+| `examples/` | Authored fixtures and reviewed reconstruction/edit examples with provenance |
 | `tests/` | Engine, API, workflow and browser checks |
 | `docs/` | Architecture, input contracts and contributor guidance |
 

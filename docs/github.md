@@ -2,7 +2,7 @@
 
 공개 대상은 범용 웹앱·서버·엔진·테스트·스킬·문서와 `scripts/catalog.json`에 등록한 스크립트입니다. 입력 영상, 특정 영상 전용 보정 코드, 변환 결과, 캐시와 설치 의존성은 포함하지 않습니다. `.gitignore`는 로컬 파일을 보존하면서 공개 후보에서 제외합니다. 이미 추적 중인 파일은 ignore만으로 추적이 해제되지 않으므로 공개 검사에서 함께 확인합니다.
 
-README에서 기능을 설명하기 위해 직접 만든 검증 영상의 비교 GIF와 편집 프로젝트만 명시적으로 선정해 `docs/assets/`와 `examples/reconstruction-demo/`에 포함했습니다. [출처·생성 절차·검증 범위](../examples/reconstruction-demo/README.md)를 함께 제공하며, 사용자 원본이나 일반 실험 결과를 자동 공개하는 규칙은 아닙니다.
+README에서 기능을 설명하기 위해 직접 만든 검증 영상과 예제용 AI 캐릭터 영상의 비교 GIF·편집 프로젝트·선정한 소스를 `docs/assets/`, `examples/reconstruction-demo/`, `examples/character-gradient/`에 포함했습니다. [기본 예제 출처](../examples/reconstruction-demo/README.md)와 [AI 캐릭터 출처·생성 절차·검증 범위](../examples/character-gradient/README.md)를 함께 제공하며, 사용자 원본이나 일반 실험 결과를 자동 공개하는 규칙은 아닙니다.
 
 ## 검사와 패키징
 

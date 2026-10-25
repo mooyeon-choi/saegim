@@ -1,0 +1,18 @@
+{
+  "provider": "Higgsfield",
+  "model": "Seedance 2.5",
+  "date": "2026-10-25",
+  "parameters": {
+    "model": "seedance_2_5",
+    "mode": "t2v",
+    "aspect_ratio": "16:9",
+    "duration": 4,
+    "resolution": "480p",
+    "generate_audio": false,
+    "count": 1,
+    "prompt": "An original charming 2D vector motion graphics mascot, a small round friendly courier character wearing a coral orange cap and a coral orange jacket, dark navy shorts and shoes, cream face and hands, two white eyes with black pupils, tiny nose and smiling mouth. Entire full body visible on the right half of a pale warm cream background. Left half is empty for a title to be added later. Clean smooth SVG-like curved shapes with subtle broad smooth gradients and soft cel shading on the cap and jacket, a soft oval floor shadow. Fixed camera. A single continuous four-second shot: character gently bobs and slowly waves one hand twice; all other body parts retain their shapes and colors. Minimal premium 2D editorial motion design, clear separation of parts, simple silhouette, no outlines, no textures, no grain, no text, no letters, no logos, no cuts, no camera movement, no objects appearing."
+  },
+  "referenceMedia": [],
+  "generationCount": 1,
+  "estimatedAndSubmittedCredits": 12
+}
