@@ -63,7 +63,9 @@ test('synthetic perspective title refits English and Korean ink and keeps editab
     await page.getByTestId('node-text-input').fill(word); await page.getByTestId('node-text-input').press('Tab');
     const changed = (await downloadProject(page)).nodes.find(node => node.id === title.id)!;
     const metrics = await page.evaluate(text => { const c = document.createElement('canvas').getContext('2d')!; c.font = '400 300px sans-serif'; const m = c.measureText(text); return { x: -m.actualBoundingBoxLeft, y: -m.actualBoundingBoxAscent, width: m.actualBoundingBoxLeft + m.actualBoundingBoxRight, height: m.actualBoundingBoxAscent + m.actualBoundingBoxDescent, advance: m.width }; }, word);
-    expect(changed.textBox).toEqual(metrics); expect(changed.textWarp).toEqual(title.textWarp); expect(changed.keyframes).toEqual(title.keyframes); expect(changed.occlusionPath).toBe(title.occlusionPath);
+    // The downloaded project is JSON: a platform's negative zero becomes zero.
+    // Compare the same serialized representation while preserving exact metrics.
+    expect(changed.textBox).toEqual(JSON.parse(JSON.stringify(metrics))); expect(changed.textWarp).toEqual(title.textWarp); expect(changed.keyframes).toEqual(title.keyframes); expect(changed.occlusionPath).toBe(title.occlusionPath);
     boxes[tag] = changed.textBox;
     await page.getByTestId('timeline-slider').fill('3');
     await page.screenshot({ path: test.info().outputPath(`title-refit-${tag}.png`), fullPage: true });
