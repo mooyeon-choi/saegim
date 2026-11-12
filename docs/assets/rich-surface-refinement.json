@@ -11,7 +11,7 @@
   },
   "geometry": {
     "beforeVertices": 1216258,
-    "afterVertices": 1207866,
+    "afterVertices": 1207902,
     "unsupportedStates": 48,
     "ellipseContours": 0,
     "frames": 48,
@@ -23,13 +23,13 @@
     "sourceFPS": 24,
     "sourceSHA256": "89a04fdf7ec01d05716fd7b6e711326e5d4ca6a269556d7762657e9717c280b6",
     "hiddenGeometryIsInferred": true,
-    "changedStates": 4118,
+    "changedStates": 4106,
     "geometryOnly": true,
     "paintAndTextPreserved": true,
     "frameRedrawPreserved": true,
     "idsAndZOrderPreserved": true,
     "sourceProjectSHA256": "177903f9d10c52d4c4abd7864f78ea3ee29e335a582c69f2dbb8cdf969d62630",
-    "projectSHA256": "a48083b6ae45d3a04aa4207b027f6af958d71577da69722dce4e7e05408b8777"
+    "projectSHA256": "72a174812cee4ca652ec6646f5e346d1f56bc75d07a80720b0416dccdb468b85"
   },
   "color": {
     "states": 6711,
@@ -50,8 +50,8 @@
   },
   "visualMetrics": {
     "originalSourceRGBMAE": 9.256696897907021,
-    "refinedSourceRGBMAE": 9.25613510320216,
-    "geometryDeltaRGBMAE": 0.005240915557484568,
+    "refinedSourceRGBMAE": 9.256150595582561,
+    "geometryDeltaRGBMAE": 0.005188349971064815,
     "oldCoolMaterialPixels": 26138,
     "newCoolMaterialPixels": 19,
     "frames": 48,
@@ -144,13 +144,18 @@
       "candidate": "Bidirectional source flow plus surrounding-background check",
       "decision": "accepted conservatively",
       "reason": "No fill occurrences confirmed on the nearly static finale; uncertain holes retained. Motion/holes/cuts/alpha fixtures validate positive and negative cases."
+    },
+    {
+      "candidate": "Topology-preserving final guard",
+      "decision": "accepted",
+      "reason": "Rejected 12 simplifications that changed the raster hole/component topology. Re-rendered every final observation; title edit/export still passes."
     }
   ],
   "gifs": [
     {
       "file": "rich-surface-refinement.gif",
-      "bytes": 5666694,
-      "sha256": "8426f89c0b5f23b7607c830c0403ca13d91004d533b664d9b824ba763f134961",
+      "bytes": 5666699,
+      "sha256": "62583a9707419c58c6185f35b8c14c83aba5b330c3666ec5f6e270b3f5ec47f3",
       "frames": 48,
       "durationMs": 2000,
       "delaysMs": [
@@ -171,17 +176,17 @@
     }
   ],
   "package": {
-    "bytes": 39131745,
-    "sha256": "a805f12c47fd03dd53ac53f5477d5759c00caf88c8fc237c114169c103c4db80",
+    "bytes": 39132063,
+    "sha256": "5709d787e7bae3f001ff3a6378688738f7fe5fbde1c5f49d0d768131671a63a4",
     "decodedExactly": true,
     "matchingSVGObservations": 48,
-    "archiveBytes": 10149737,
-    "archiveSHA256": "59b1d4abffc20b376344134e43721cc6016030d18b7f08fd34aa6ee00af9bc76",
+    "file": "examples/rich-motion/surface-refined.zip",
+    "archiveBytes": 10149739,
+    "archiveSHA256": "a966e1951cc7b9a82d95c4828aa3eab44cd1d07dce2c2d2036d2341d9038a3cd",
     "archiveEntries": [
       "surface-refined.json"
     ],
-    "archiveRoundtripExact": true,
-    "file": "examples/rich-motion/surface-refined.zip"
+    "archiveRoundtripExact": true
   },
   "validation": {
     "backendTestsPassed": 124,

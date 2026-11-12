@@ -70,6 +70,9 @@ def primitive_path(ring, node, tolerance):
     center, axes, degrees = cv2.fitEllipse(ring)
     radii = np.array(axes)/2
     if min(radii) < 2 or max(radii)/min(radii) > 10: return None
+    # Four cubic arcs have a small but nonzero ellipse approximation error.
+    # At large source dimensions it must still fit inside the reserved budget.
+    if max(radii)*.000273 > tolerance*.15: return None
     if abs(np.pi*np.prod(radii)-abs(area)) > abs(area)*.015: return None
     a = np.deg2rad(degrees); rotation = np.array([[np.cos(a), -np.sin(a)], [np.sin(a), np.cos(a)]])
     def world(unit): return np.array(unit)*radii@rotation.T+center
@@ -210,12 +213,15 @@ def run(snapshot, source, source_start, tolerance):
             # subpixel edge band. A hole cannot disappear through simplification.
             has_holes = any(cv2.contourArea(r, oriented=True) < 0 for r in rings)
             old_holes = None
-            if has_holes:
+            reduced = any(len(a) != len(b) for a,b in zip(rings,simple))
+            if has_holes or reduced:
                 old_holes = binary_fill_holes(mask) & ~mask
                 new_mask = raster(simple, shape); new_holes = binary_fill_holes(new_mask) & ~new_mask
                 old_components = cv2.connectedComponents(old_holes.astype(np.uint8))[0]
                 new_components = cv2.connectedComponents(new_holes.astype(np.uint8))[0]
-                if old_components != new_components: simple = rings
+                old_solids = cv2.connectedComponents(mask.astype(np.uint8))[0]
+                new_solids = cv2.connectedComponents(new_mask.astype(np.uint8))[0]
+                if old_components != new_components or old_solids != new_solids: simple = rings
             refined.append(simple)
             stats['beforeVertices'] += sum(map(len, rings)); stats['afterVertices'] += sum(map(len, simple))
             if not has_holes: continue
