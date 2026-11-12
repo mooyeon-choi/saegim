@@ -10,6 +10,7 @@ const tasks={
   render:[process.execPath,'scripts/render-project.mjs'],
   elements:[process.execPath,'scripts/export-elements.mjs'],
   'fit-surfaces':[process.execPath,'scripts/fit-surface-gradients.mjs'],
+  'refine-surfaces':[process.execPath,'scripts/refine-frame-surfaces.mjs'],
   compare:[python,'scripts/compare-video.py'],
   fixtures:[python,'scripts/create-fixtures.py'],
   'verify-fixtures':[python,'scripts/verify-analysis.py'],

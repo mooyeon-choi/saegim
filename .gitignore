@@ -35,6 +35,8 @@ artifacts/
 !/scripts/render-project.mjs
 !/scripts/export-elements.mjs
 !/scripts/fit-surface-gradients.mjs
+!/scripts/refine-frame-surfaces.mjs
+!/scripts/refine_frame_surfaces.py
 !/scripts/compare-video.py
 !/scripts/workflow.mjs
 !/scripts/release-check.mjs

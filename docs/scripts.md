@@ -27,7 +27,7 @@ node scripts/workflow.mjs doctor
 node scripts/workflow.mjs analyze --input /path/to/input.mp4 --out-dir artifacts/my-video
 ```
 
-지원 작업은 `analyze`, `render`, `elements`, `compare`, `fixtures`, `verify-fixtures`, `render-fixtures`, `compare-fixtures`, `release-check`, `package`입니다.
+지원 작업은 `analyze`, `render`, `elements`, `fit-surfaces`, `refine-surfaces`, `compare`, `fixtures`, `verify-fixtures`, `render-fixtures`, `compare-fixtures`, `release-check`, `package`입니다.
 
 | 파일 | 입력 | 출력·역할 |
 | --- | --- | --- |
@@ -270,3 +270,26 @@ npm run workflow -- elements \
 `gradient-fit-report.json`의 오차는 선택한 **보이는 색 표본**에 대한 값이며, 가려진 원본 색의 정확도나 영상 전체의 재현율이 아닙니다. 복잡한 여러 색 방향이나 좁은 반사광이 한 면에 섞여 있다면 surface 영역을 더 나누어 검수하세요. 기본 출력은 이전처럼 정적 대표 SVG입니다.
 
 관측되지 않은 부위처럼 색을 측정하면 안 되는 배면에는 `surface.fitColors: false`를 지정할 수 있습니다. 이 경우 도형과 지정 색을 그대로 유지합니다.
+
+
+## 프레임별 도형 단순화와 가림 판단
+
+```sh
+npm run workflow -- refine-surfaces \
+  --project artifacts/my-video/project.json \
+  --source /path/to/aligned-source.mp4 \
+  --source-start 0 \
+  --out-dir artifacts/my-video/refined \
+  --tolerance 0.6
+```
+
+이 단계는 분석된 **앱 schema 1** 프로젝트를 보정합니다. `temporal.mode: "frames"`, 유한한 `sampleFps`, 관측 격자에 맞는 키프레임이 필요합니다. 원본은 프로젝트와 같은 해상도의 CFR 영상이어야 합니다. 입력과 출력의 스키마·시각을 조용히 바꾸지 않으며 schema 2, VFR, 다른 해상도는 명시적으로 거부합니다. 조립 프로젝트는 구간을 따로 디코딩하고 구간 원본 오프셋을 지정해야 합니다.
+
+- 실제 엔진이 평가한 각 관측의 M/L/Z 닫힌 윤곽을 원본 픽셀 단위 허용 오차(0 초과, 1 이하)와 면적 변화 한도 안에서 단순화합니다. 작은 디테일과 구멍 개수를 보호합니다. 원래 윤곽과 양방향 거리·면적이 맞는 경우에만 타원 곡선으로 치환하며 미지원 입력 곡선·도형은 보존합니다.
+- 내부 빈 영역의 색이 주변 배경과 닮으면 실제 구멍 후보로 보존합니다. 색이 다르다는 이유만으로 채우지 않습니다.
+- 위쪽의 불투명한 동일 요소가 내부의 99.5% 이상을 덮고, 가까운 다른 관측 2개 이상에서 원본의 양방향 optical flow로 부모 및 주변 배경에 대한 상대 이동이 확인될 때만 가림으로 **추론**합니다. 컷을 건너 증거를 연결하지 않습니다. 정지한 디스플레이 내부처럼 증거가 부족하면 불확실로 남깁니다.
+- 확인된 가림은 뒤 도형의 구멍만 채우고 앞 도형과 기존 z-order를 보존합니다. 내부 그라데이션·색·텍스트를 평탄화하지 않습니다. 전체 프레임 혼합이나 래스터 삽입을 사용하지 않습니다.
+
+출력 `project.json`은 편집기에 불러올 수 있습니다. `surface-evidence.json`은 각 관측의 구멍 후보, 가림 주체, 상대 이동, 판단 이유를 기록하며 `refinement-check.json`은 좌표 수, 변경 상태 수, 보존 검사를 기록합니다. 중간 `evaluated-frame-surfaces-v1` 및 `frame-surface-refinement-v1`은 앱 프로젝트나 `object-scene-v1`과 다른 형식입니다.
+
+이 단계는 기존 벡터 윤곽에서 후보를 찾습니다. 그 윤곽은 원본 정답 마스크가 아니므로 좌표 감소율·레이어 덮임 비율·움직임 일치도는 원본 복원 정확도가 아닙니다. 원본 대비 별도 렌더 검수가 필요하며, 정지 가림·새로 등장한 면·반투명 가림·열린 윤곽 뒤의 숨은 형태는 자동으로 완성하지 않습니다. 색상 편집 시 조명과 재질을 나누는 의미 마스크도 별도의 원본 관측이 필요합니다.

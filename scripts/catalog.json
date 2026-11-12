@@ -5,7 +5,7 @@
   "statusDefinitions": {
     "maintained": "Reusable development, analysis, validation or release tool included in the public source scope. Prerequisites still apply."
   },
-  "entryCount": 22,
+  "entryCount": 24,
   "entries": [
     {
       "path": "scripts/analyze-video.py",
@@ -447,6 +447,53 @@
         "No automatic segmentation, image registration or temporal alignment.",
         "ROI crops may include foreground occluders and background; visible-mask metrics measure color only.",
         "Does not measure shape IoU or reconstruction accuracy percentages, and does not claim full-video visual review."
+      ]
+    },
+    {
+      "path": "scripts/refine-frame-surfaces.mjs",
+      "status": "maintained",
+      "stage": "surface-refinement",
+      "purpose": "Simplify evaluated redraw contours and conservatively infer covered holes from opaque upper layers plus relative motion over neighboring observations. Preserves uncertain holes, paint, IDs, text and timing.",
+      "invocation": "node-cli",
+      "freshClone": "requires-local-video-and-generated-project",
+      "prerequisites": [
+        "App schema 1 project with aligned frame-redraw observations; aligned CFR source video; Python analysis dependencies. Schema 2 must be decoded per segment explicitly."
+      ],
+      "cliOptionsObserved": [
+        "--project",
+        "--source",
+        "--source-start",
+        "--out-dir",
+        "--tolerance",
+        "--python",
+        "--overwrite"
+      ],
+      "outputs": [
+        "project.json",
+        "observations.json",
+        "surface-evidence.json",
+        "refinement-check.json"
+      ]
+    },
+    {
+      "path": "scripts/refine_frame_surfaces.py",
+      "status": "maintained",
+      "stage": "surface-refinement",
+      "purpose": "Analysis worker for evaluated-frame-surfaces-v1 snapshots; bounds polyline simplification and records possible-hole, uncertain and inferred-occlusion evidence. Not a semantic object parser or standalone app project converter.",
+      "invocation": "python-worker",
+      "freshClone": "requires-renderer-observations-and-local-video",
+      "prerequisites": [
+        "Use refine-frame-surfaces.mjs as the validated app-project entry point."
+      ],
+      "cliOptionsObserved": [
+        "--snapshots",
+        "--source",
+        "--source-start",
+        "--tolerance",
+        "--output"
+      ],
+      "outputs": [
+        "frame-surface-refinement-v1 evidence JSON"
       ]
     }
   ]

@@ -1,0 +1,194 @@
+{
+  "scope": {
+    "sourceFrames": [
+      145,
+      192
+    ],
+    "sourceStart": 6.041666666666667,
+    "duration": 2,
+    "observations": 48,
+    "fullEightSecondFilmRefined": false
+  },
+  "geometry": {
+    "beforeVertices": 1216258,
+    "afterVertices": 1207866,
+    "unsupportedStates": 48,
+    "ellipseContours": 0,
+    "frames": 48,
+    "inferredOccludedHoles": 0,
+    "preservedPossibleHoles": 12,
+    "preservedUncertainHoles": 1204,
+    "toleranceSourcePixels": 0.85,
+    "sourceStart": 6.041666666666667,
+    "sourceFPS": 24,
+    "sourceSHA256": "89a04fdf7ec01d05716fd7b6e711326e5d4ca6a269556d7762657e9717c280b6",
+    "hiddenGeometryIsInferred": true,
+    "changedStates": 4118,
+    "geometryOnly": true,
+    "paintAndTextPreserved": true,
+    "frameRedrawPreserved": true,
+    "idsAndZOrderPreserved": true,
+    "sourceProjectSHA256": "177903f9d10c52d4c4abd7864f78ea3ee29e335a582c69f2dbb8cdf969d62630",
+    "projectSHA256": "a48083b6ae45d3a04aa4207b027f6af958d71577da69722dce4e7e05408b8777"
+  },
+  "color": {
+    "states": 6711,
+    "paintRegions": 6884,
+    "materialSurfaces": 4,
+    "observations": 48,
+    "method": "Source-annotated surface masks propagated through adjacent source frames. Continuous linear RGB material-chroma replacement with luminance-neutral delta; gamut limited. No hue-interval selection inside the material. Original gradients and source-independent outside color edits retained. Neutral highlights remain neutral. Source polygons and mask flow are explicit case inputs.",
+    "textUnchanged": true,
+    "mode": "frames"
+  },
+  "tracking": {
+    "frames": 48,
+    "materialSurfaces": 4,
+    "annotation": "Source-visible surface outline on frame 168; forward/backward propagation; source frame overlays for validation. Not semantic automatic segmentation.",
+    "roundTripErrorP95Px": 0.0020426604314707202,
+    "roundTripErrorMaxPx": 0.029267948120832443,
+    "cutCrossings": 0
+  },
+  "visualMetrics": {
+    "originalSourceRGBMAE": 9.256696897907021,
+    "refinedSourceRGBMAE": 9.25613510320216,
+    "geometryDeltaRGBMAE": 0.005240915557484568,
+    "oldCoolMaterialPixels": 26138,
+    "newCoolMaterialPixels": 19,
+    "frames": 48,
+    "scope": "Source frames145..192, 6.0416667..8.0416667 seconds. No full eight-second visual-review claim.",
+    "metricLimit": "Cool-colored pixels counted in eroded independently annotated material outlines; intentional palette edits are excluded from source RGB comparison. Neither metric is reconstruction accuracy."
+  },
+  "editor": {
+    "passed": true,
+    "imported": true,
+    "realTextEdit": true,
+    "savedAndReloaded": true,
+    "exported": true,
+    "nonTextNodesExactlyPreserved": true,
+    "frameRedraw": true,
+    "errors": []
+  },
+  "actualRenderer": {
+    "passed": true,
+    "variants": 4,
+    "framesPerVariant": 48,
+    "width": 640,
+    "height": 360,
+    "fps": 24,
+    "sourceStart": 6.041666666666667,
+    "errors": [],
+    "requests": [],
+    "stageRasterElements": 0
+  },
+  "visualReview": {
+    "contactSheetFrames": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47
+    ],
+    "enlargedCapAndShoeSourceFrame": 168,
+    "finding": "Cap and shoe interior cool patches are substantially reduced. Quantized bands, original facial-detail loss, and cool floor reflections remain. No observed new hole filling or title regression in this final held shot."
+  },
+  "iterations": [
+    {
+      "candidate": "BBox relative motion only",
+      "decision": "rejected",
+      "reason": "96 proposed fill occurrences could be explained by segmentation jitter on nearly static source frames."
+    },
+    {
+      "candidate": "Bidirectional source flow plus surrounding-background check",
+      "decision": "accepted conservatively",
+      "reason": "No fill occurrences confirmed on the nearly static finale; uncertain holes retained. Motion/holes/cuts/alpha fixtures validate positive and negative cases."
+    }
+  ],
+  "gifs": [
+    {
+      "file": "rich-surface-refinement.gif",
+      "bytes": 5666694,
+      "sha256": "8426f89c0b5f23b7607c830c0403ca13d91004d533b664d9b824ba763f134961",
+      "frames": 48,
+      "durationMs": 2000,
+      "delaysMs": [
+        40,
+        50
+      ]
+    },
+    {
+      "file": "rich-material-detail.gif",
+      "bytes": 4256466,
+      "sha256": "974f6d72af7e963ee8a9fcbf8d67e3bd4c961f418e764aad7b46586e515f56da",
+      "frames": 48,
+      "durationMs": 2000,
+      "delaysMs": [
+        40,
+        50
+      ]
+    }
+  ],
+  "package": {
+    "bytes": 39131745,
+    "sha256": "a805f12c47fd03dd53ac53f5477d5759c00caf88c8fc237c114169c103c4db80",
+    "decodedExactly": true,
+    "matchingSVGObservations": 48,
+    "archiveBytes": 10149737,
+    "archiveSHA256": "59b1d4abffc20b376344134e43721cc6016030d18b7f08fd34aa6ee00af9bc76",
+    "archiveEntries": [
+      "surface-refined.json"
+    ],
+    "archiveRoundtripExact": true,
+    "file": "examples/rich-motion/surface-refined.zip"
+  },
+  "validation": {
+    "backendTestsPassed": 124,
+    "browserRegressionTestsPassed": 3,
+    "workflowSmokeChecksPassed": 3,
+    "buildPassed": true,
+    "releaseCheckPassed": true,
+    "archiveContentReviewed": true
+  }
+}

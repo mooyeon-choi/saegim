@@ -35,7 +35,15 @@ The complete 193-frame film was analyzed at **640 × 360 / 24 observations per s
 
 A **script-assisted palette edit** changes cyan/teal paint and gradient-stop colors to warm orange, including the cap, shoes, companion and matching stage accents. It retains geometry, gradient coordinates, stop offsets and timing. This is a palette rule, not automatic semantic clothing selection. [Color-edited project and method](examples/rich-motion/README.md#palette-edit).
 
-**Try it:** the three importable projects cover the final **6.0417–8.0417 seconds** of the source. The conversion GIF covers the **whole film**. Thin closed-eye and mouth lines disappear during the wide-shot hop; contour edges and complex lighting still differ from the source; this is an automatic editing draft, not recovered source artwork.
+#### Separate shading from the outside contour
+
+![Source, previous color edit and refined edit: cap and shoe shading stays inside tracked material outlines.](docs/assets/rich-material-detail.gif)
+
+The refined finale uses source-annotated cap, shoe and companion outlines tracked across **all 48 frames**. Color changes include internal shading while neutral highlights remain light. Contours are simplified within a source-pixel budget. A separate refinement step checks upper-layer coverage and source motion before inferring hidden surfaces; uncertain holes remain unchanged. This still requires explicit material annotations, and the broad lighting bands in the reconstruction remain visible.
+
+[Full source / previous / refined GIF](docs/assets/rich-surface-refinement.gif) · [Editable refined project (unzip first)](examples/rich-motion/surface-refined.zip) · [Method and measured limits](examples/rich-motion/README.md#surface-aware-refinement) · [Reusable refinement command](docs/scripts.md#프레임별-도형-단순화와-가림-판단)
+
+**Try it:** the four importable projects cover the final **6.0417–8.0417 seconds** of the source. The conversion GIF covers the **whole film**. Thin closed-eye and mouth lines disappear during the wide-shot hop; contour edges and complex lighting still differ from the source; this is an automatic editing draft, not recovered source artwork.
 
 <details>
 <summary>Earlier simple character example</summary>
