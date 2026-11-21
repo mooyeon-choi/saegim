@@ -6,7 +6,8 @@ import numpy as np
 import pytest
 
 from server.analyzer import Observation, Track, analyze_video, track_to_node
-from server.quality import fit_gradient, pixel_edge_contours, segment_regions
+from server.quality import fit_gradient, high_detections, pixel_edge_contours, segment_regions
+from server.primitives import fit_region, isolate_strokes
 from tests.backend.test_analysis import NoOCR, make_video
 
 
@@ -80,6 +81,50 @@ def test_high_mode_observes_24fps_and_emits_only_editable_vectors(tmp_path, monk
     assert project['temporal']['sampleFps'] == pytest.approx(24)
     assert project['temporal']['cuts'] == []
     assert project["nodes"]
-    assert all(node["type"] == "path" for node in project["nodes"])
-    assert all(key.get("path") for node in project["nodes"] for key in node["keyframes"])
+    assert all(node["type"] in {"rect", "ellipse", "path"} for node in project["nodes"])
+    assert all(key.get("path") for node in project["nodes"] if node["type"] == "path"
+               for key in node["keyframes"])
     assert not any(token in json.dumps(project) for token in ("data:image", "base64", "<video", "<image"))
+
+@pytest.mark.parametrize("start_y", [8, 9])
+def test_thin_diagonal_survives_quantization_as_one_four_corner_shape(start_y):
+    img = np.full((64, 80, 3), 226, np.uint8)
+    cv2.line(img, (4, start_y), (44, start_y+40), (30, 86, 178), 1)
+    # Moving the stroke by one pixel puts it between all palette training samples.
+    labels = segment_regions(img, color_count=4)
+    stroke = labels[np.arange(start_y, start_y+41), np.arange(4, 45)]
+    assert len(np.unique(stroke)) == 1 and stroke[0] != labels[1, 1]
+    observations, _ = high_detections(img, 0, [])
+    line = next(o for o in observations if o.x == 4 and o.y == start_y)
+    assert line.path.count("M") == 1 and line.path.count("L") == 3
+
+
+def test_simple_regions_use_native_shapes_only_across_compatible_observations():
+    ellipse = np.zeros((24, 32), bool)
+    y, x = np.indices(ellipse.shape)
+    ellipse[:] = ((x + .5 - 16)/16)**2 + ((y + .5 - 12)/12)**2 <= 1
+    hint, path = fit_region(ellipse, pixel_edge_contours(ellipse))
+    assert hint == "ellipse"
+    plain = Observation(0, "path", 10, 20, 32, 24, (40, 80, 150), (255, 255, 255),
+                        path=path, primitive_kind=hint, precise=True)
+    assert track_to_node(Track([plain]), 0, 1, 1, 1, 24)["type"] == "ellipse"
+    ellipse[9:14, 13:19] = False
+    assert fit_region(ellipse, pixel_edge_contours(ellipse)) is None
+    with_hole = Observation(1/24, "path", 10, 20, 32, 24, plain.color, plain.background,
+                            path="M0 0 H1000 V1000 H0 Z M400 400 V600 H600 V400 Z", precise=True)
+    tracked = track_to_node(Track([plain, with_hole]), 0, 1, 1, 1, 24)
+    assert tracked["type"] == "path"
+    assert [k["path"] for k in tracked["keyframes"]] == [path, with_hole.path]
+
+
+def test_stroke_isolation_preserves_gaps_and_paints_under_gradients():
+    im = np.zeros((86, 144, 3), np.uint8)
+    im[:] = np.linspace(160, 224, 144, dtype=np.uint8)[None, :, None]
+    for x0, x1 in [(12, 53), (60, 106)]:
+        cv2.line(im, (x0, 26), (x1, 26), (45, 85, 181), 2)
+    cv2.rectangle(im, (8, 52), (132, 57), (20, 60, 165), -1)
+    im[53:55, 76:78] = 200
+    shapes, mask = isolate_strokes(im)
+    assert len(shapes) == 2
+    assert mask[26, 18] and mask[26, 98] and not mask[26, 56]
+    assert not mask[54, 76]

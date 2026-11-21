@@ -189,6 +189,7 @@ See [architecture and schema boundaries](docs/architecture.md). The app's schema
 ## Current limits
 
 - Uploads are limited to 100 MiB; selected analysis ranges are 0.2–60 seconds, up to 4K. Longer-than-30-second ranges are assembled from processing segments, which are not necessarily scene cuts.
+- High quality fits continuous thin strokes with four corners and promotes tracks that consistently fit an axis-aligned rectangle or ellipse to editable SVG primitives. Shapes that change topology retain their measured paths. For striped surfaces with a shared straight edge, the analyzer measures one interface from both colors and clips each fitted stripe pattern to its own side.
 - High quality samples at the smaller of source FPS and 24 FPS. Increasing output FPS does not recover missing observations.
 - Complex inputs may exceed element/path/project limits. Shorter ranges or standard quality may help, but can lose detail.
 - Frame redraw replaces the SVG at observation times. Sparse observations can produce stepped motion; it does not recover missing geometry.

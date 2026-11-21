@@ -214,6 +214,10 @@ class Observation:
     ink_y: float | None = None
     gradient: dict | None = None
     precise: bool = False
+    primitive_kind: str | None = None
+    stroke_layer: bool = False
+    surface_order: int = 0
+    paint_regions: list[dict] | None = None
 
     @property
     def center(self):
@@ -443,6 +447,11 @@ def _project_time(value: float, duration: float, precise: bool = False) -> float
 
 def track_to_node(track: Track, index: int, sx: float, sy: float, duration: float, sample_fps: float, precise_timing: bool = False) -> dict:
     observations = track.observations
+    # Promote the entire track only when every measured silhouette agrees.
+    # A later occlusion or topology change keeps its own editable path.
+    hint = observations[0].primitive_kind
+    if hint and all(o.precise and o.primitive_kind == hint for o in observations):
+        observations = [replace(o, kind=hint) for o in observations]
     counts = Counter(o.kind for o in observations)
     kind = counts.most_common(1)[0][0]
     dominant_text = ""
@@ -468,6 +477,8 @@ def track_to_node(track: Track, index: int, sx: float, sy: float, duration: floa
         frames.append({"time": _project_time(o.time, duration, precise_timing), "x": round((o.x-base.x)*sx, 3), "y": round((o.y-base.y)*sy, 3), "scaleX": round(o.width/base.width, 5), "scaleY": round(o.height/base.height, 5), "rotation": round(o.rotation-base.rotation, 4), "opacity": round(opacity, 4), "easing": "linear"})
         if o.precise:
             frames[-1].update(fill=hex_color(o.color), gradient=o.gradient, opacity=1)
+            if o.paint_regions is not None:
+                frames[-1].update(paintRegions=o.paint_regions, stackBoundary={"featherPx": 0})
     if kind == "path":
         for o, keyframe in zip(observations, frames):
             if o.path:
@@ -495,6 +506,8 @@ def track_to_node(track: Track, index: int, sx: float, sy: float, duration: floa
         node["fill"] = hex_color(base.color)
         if base.gradient:
             node["gradient"] = base.gradient
+        if base.paint_regions is not None:
+            node.update(paintRegions=base.paint_regions, stackBoundary={"featherPx": 0})
         node["evidence"] = {"method": "공유 픽셀 경계 + 연속 그라데이션 추정 + 시간 추적", "observations": len(observations), "needsReview": True,
                             "note": "관측 색상 영역입니다. 의미상 같은 물체도 여러 영역으로 나뉠 수 있으며 조명·가림·영역 연결을 원본과 비교해 확인하세요."}
     if kind == "text":
@@ -509,6 +522,11 @@ def track_to_node(track: Track, index: int, sx: float, sy: float, duration: floa
         node["name"] = {"rect": "사각형", "ellipse": "원 / 타원", "path": "벡터 윤곽"}[kind] + f" {index+1}"
         if kind == "path":
             node["path"] = base.path
+            if base.surface_order:
+                node["name"] = "바탕 그라데이션" if base.surface_order < 0 else f"공유 경계 색면 {index+1}"
+                node["evidence"]["method"] = "양쪽 색면에서 측정한 공유 직선과 면 내부의 반복 무늬"
+            if base.stroke_layer:
+                node["name"] = f"직선 {index+1}"
         elif kind == "rect":
             normalized_radii = [o.corner_radius*base.width/max(o.width, 1) for o in candidates]
             node["borderRadius"] = round(float(np.median(normalized_radii))*min(sx, sy), 2)
@@ -630,8 +648,8 @@ def analyze_video(path: Path, original_name: str, source_url: str, sample_fps: f
         warnings.append(f"요소가 {len(valid_tracks)}개 검출되어 관측 면적·시간이 큰 {max_nodes}개만 보존했습니다. 복잡한 영상은 단순화해 주세요.")
         valid_tracks.sort(key=lambda t: sum(o.area for o in t.observations), reverse=True)
         valid_tracks = valid_tracks[:max_nodes]
-    # Geometric layers below semantic text; within each group larger objects first.
-    valid_tracks.sort(key=lambda t: (t.observations[0].kind == "text", -np.median([o.area for o in t.observations])))
+    # Restore isolated strokes over their measured supporting surfaces, below OCR.
+    valid_tracks.sort(key=lambda t: (t.observations[0].kind == "text", t.observations[0].surface_order, t.observations[0].stroke_layer, -np.median([o.area for o in t.observations])))
     nodes = [track_to_node(t, i, sx, sy, meta["duration"], sample_fps, precise_timing=high_quality) for i, t in enumerate(valid_tracks)]
     if high_quality:
         warnings[0] = "정밀 색상 영역·선형/방사형 그라데이션으로 만든 벡터 초안입니다. 원본의 3D 모델·조명·리깅·숨은 영역을 복구한 결과는 아닙니다."

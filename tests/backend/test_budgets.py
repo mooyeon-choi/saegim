@@ -77,3 +77,12 @@ def test_dense_frame_node_budget_accepts_8000_and_rejects_8001_without_truncatio
     with pytest.raises(ValueError, match="8,001개 / 한도 8,000개"):
         check_project_budget(project)
     assert len(project["nodes"]) == 8001
+
+def test_clipped_stripes_share_the_path_and_gradient_budgets():
+    scene = {"nodes": [{"keyframes": [{"paintRegions": [
+        {"path": "M0 0 L10 12 Z", "gradient": {"stops": [{}, {}]}}
+    ]}]}]}
+    with pytest.raises(ValueError, match="전체 SVG 경로 좌표"):
+        check_project_budget(scene, replace(PROJECT_LIMITS, path_coordinates=3))
+    with pytest.raises(ValueError, match="전체 그라데이션"):
+        check_project_budget(scene, replace(PROJECT_LIMITS, gradient_stops=1))

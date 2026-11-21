@@ -45,18 +45,20 @@ def check_project_budget(project: dict, limits: ProjectLimits = PROJECT_LIMITS) 
         require_budget("한 요소의 키프레임 수", len(keys), limits.keys_per_node)
         keyframes += len(keys)
         for item in (node, *keys):
-            for field in ("path", "occlusionPath"):
-                path = item.get(field)
-                if path:
-                    size = len(path.encode("utf-8"))
-                    count = sum(1 for _ in PATH_NUMBER.finditer(path))
-                    require_budget("한 SVG 경로 크기", size, limits.bytes_per_path, "바이트")
-                    require_budget("한 SVG 경로 좌표 수", count, limits.coordinates_per_path)
-                    path_bytes += size
-                    coordinates += count
-            gradient = item.get("gradient")
-            if gradient:
-                gradient_stops += len(gradient["stops"])
+            regions = item.get("paintRegions", [])
+            require_budget("부분 채색 수", len(regions), 8)
+            paths = [item.get("path"), item.get("occlusionPath"), *(r.get("path") for r in regions)]
+            for path in filter(None, paths):
+                size = len(path.encode("utf-8"))
+                count = sum(1 for _ in PATH_NUMBER.finditer(path))
+                require_budget("한 SVG 경로 크기", size, limits.bytes_per_path, "바이트")
+                require_budget("한 SVG 경로 좌표 수", count, limits.coordinates_per_path)
+                path_bytes += size
+                coordinates += count
+            for paint in (item, *regions):
+                gradient = paint.get("gradient")
+                if gradient:
+                    gradient_stops += len(gradient["stops"])
     require_budget("전체 키프레임 수", keyframes, limits.keyframes)
     require_budget("전체 SVG 경로 크기", path_bytes, limits.path_bytes, "바이트")
     require_budget("전체 SVG 경로 좌표 수", coordinates, limits.path_coordinates)

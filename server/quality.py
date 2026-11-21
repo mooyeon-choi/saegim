@@ -1,7 +1,6 @@
 """Measured color regions and fitted SVG gradients for the optional high mode.
 
-The temporary pixel arrays are analysis inputs only. Output consists of paths,
-linear/radial paint parameters and the existing editable OCR text observations.
+The temporary pixel arrays are analysis inputs only. Output consists of simple shapes, paths, measured paints and editable OCR text.
 """
 from __future__ import annotations
 
@@ -11,6 +10,9 @@ import cv2
 import numpy as np
 from PIL import Image
 from scipy.optimize import linear_sum_assignment
+
+from .pattern_surfaces import patterned_frame
+from .primitives import fit_region, isolate_strokes, join_diagonal_strokes, straight_strip
 
 
 def pixel_edge_contours(mask: np.ndarray) -> list[np.ndarray]:
@@ -60,6 +62,37 @@ def _plane_fit(matrix, products, square_sum):
     return coefficients, error
 
 
+def quantize(rgb: np.ndarray, palette: np.ndarray) -> np.ndarray:
+    table = Image.new("P", (1, 1))
+    table.putpalette(np.vstack([palette, np.repeat(palette[:1], 256-len(palette), axis=0)]).ravel().tolist())
+    indices = np.asarray(Image.fromarray(rgb).quantize(palette=table, dither=Image.Dither.NONE))
+    return np.where(indices < len(palette), indices, 0)
+
+
+def missing_stroke_colors(rgb: np.ndarray, indices: np.ndarray, palette: np.ndarray) -> list:
+    error = np.abs(rgb.astype(np.int16) - palette[indices]).max(axis=2) > 38
+    if np.count_nonzero(error) < 8:
+        return []
+    bins = rgb.astype(np.int32) // 32
+    codes = (bins[:, :, 0] * 8 + bins[:, :, 1]) * 8 + bins[:, :, 2]
+    counts = np.bincount(codes[error], minlength=512)
+    candidates = []
+    for code in counts.argsort()[-8:][::-1]:
+        if counts[code] < 8 or len(palette) + len(candidates) >= 256:
+            break
+        mask = np.uint8(error & (codes == code))
+        n, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
+        for group in range(1, n):
+            x, y, w, h, area = stats[group]
+            if area < 8 or area > 7 * np.hypot(w, h):
+                continue
+            crop = labels[y:y+h, x:x+w] == group
+            if straight_strip(crop) is not None:
+                candidates.append(np.median(rgb[y:y+h, x:x+w][crop], axis=0).astype(np.uint8))
+                break
+    return candidates
+
+
 def segment_regions(rgb: np.ndarray, color_count: int = 64) -> np.ndarray:
     """Join neighboring regions only when a continuous gradient explains them."""
     height, width = rgb.shape[:2]
@@ -86,16 +119,20 @@ def segment_regions(rgb: np.ndarray, color_count: int = 64) -> np.ndarray:
             candidate = np.median(samples, axis=0).astype(np.uint8)
             if np.min(np.linalg.norm(palette.astype(float)-candidate, axis=1)) > 18:
                 palette = np.vstack([palette, candidate])
-    pal_image = Image.new("P", (1, 1))
-    # Repeat a valid color in unused slots; a black padding slot would introduce
-    # an unintended quantization color in very dark input regions.
-    palette_full = np.concatenate([palette, np.repeat(palette[:1], 256-len(palette), axis=0)])
-    pal_image.putpalette(palette_full.ravel().tolist())
-    quantized = np.asarray(Image.fromarray(smooth).quantize(palette=pal_image, dither=Image.Dither.NONE))
+    quantized = quantize(smooth, palette)
+    # A thin diagonal may miss every pixel of the training grid. Recover its
+    # paint from straight, connected runs of poorly represented source colors.
+    missing = missing_stroke_colors(smooth, quantized, palette)
+    if missing:
+        palette = np.vstack([palette, *missing])
+        quantized = quantize(smooth, palette)
     labels = np.zeros((height, width), np.int32)
     count = 0
     for color in np.unique(quantized):
-        n, components = cv2.connectedComponents((quantized == color).astype(np.uint8), connectivity=4)
+        mask = (quantized == color).astype(np.uint8)
+        n, components = cv2.connectedComponents(mask, connectivity=4)
+        if n > 2:
+            components = join_diagonal_strokes(mask, components)
         inside = components > 0
         labels[inside] = components[inside]+count-1
         count += n-1
@@ -252,8 +289,27 @@ def high_detections(rgb: np.ndarray, time: float, ocr_rows: list[dict]):
         w, h = max(1, int(row["width"]*width)), max(1, int(row["height"]*height))
         cv2.rectangle(exclusion, (max(0, x-3), max(0, y-3)), (min(width-1, x+w+3), min(height-1, y+h+3)), 255, -1)
     clean = cv2.inpaint(rgb, exclusion, 3, cv2.INPAINT_TELEA) if np.any(exclusion) else rgb
-    labels = segment_regions(clean)
+    surfaces = patterned_frame(clean)
+    if surfaces:
+        extent = max(width, height)
+        objects = []
+        for material, path, fill, gradient, regions, area in surfaces:
+            color = tuple(bytes.fromhex(fill[1:]))
+            order = -1 if material < 0 else material+1
+            objects.append(Observation(time, "path", 0, 0, extent, extent, color, tuple(bg),
+                                       path=path, gradient=gradient, area=area, precise=True,
+                                       surface_order=order, paint_regions=regions if material >= 0 else None))
+        return [*objects, *text], bg
+    strokes, stroke_mask = isolate_strokes(clean)
     observations = []
+    for x, y, w, h, path, area, pixels, xs, ys in strokes:
+        fill, gradient = fit_gradient(pixels, xs, ys, w, h)
+        color = tuple(int(fill[i:i+2], 16) for i in (1, 3, 5))
+        observations.append(Observation(time, "path", x, y, w, h, color, tuple(bg), path=path,
+                                        area=area, precise=True, gradient=gradient, stroke_layer=True))
+    if strokes:
+        clean = cv2.inpaint(clean, stroke_mask, 2, cv2.INPAINT_TELEA)
+    labels = segment_regions(clean)
     for region in np.unique(labels):
         ys, xs = np.where(labels == region)
         if len(xs) < 2:
@@ -261,8 +317,11 @@ def high_detections(rgb: np.ndarray, time: float, ocr_rows: list[dict]):
         x, y, right, bottom = int(xs.min()), int(ys.min()), int(xs.max())+1, int(ys.max())+1
         w, h = right-x, bottom-y
         mask = labels[y:bottom, x:right] == region
-        paths = []
-        for contour in pixel_edge_contours(mask):
+        contours = pixel_edge_contours(mask)
+        primitive = fit_region(mask, contours)
+        hint, fitted_path = primitive or (None, None)
+        paths = [fitted_path] if fitted_path else []
+        for contour in ([] if fitted_path else contours):
             points = cv2.approxPolyDP(contour, .35 if len(xs) < 256 else 1.0, True).reshape(-1, 2)
             if len(points) < 3:
                 continue
@@ -282,7 +341,7 @@ def high_detections(rgb: np.ndarray, time: float, ocr_rows: list[dict]):
         fill, gradient = fit_gradient(clean[ys, xs], xs-x, ys-y, w, h)
         color = tuple(int(fill[i:i+2], 16) for i in (1, 3, 5))
         observations.append(Observation(time, "path", x, y, w, h, color, tuple(bg), path=" ".join(paths),
-                                        area=float(len(xs)), gradient=gradient, precise=True))
+                                        area=float(len(xs)), gradient=gradient, precise=True, primitive_kind=hint))
     return [*observations, *text], bg
 
 
@@ -317,6 +376,10 @@ def associate_precise(tracks, detections, time, sample_fps, diagonal):
     new_colors = np.array([observation.color for observation in objects])
     color_cost = np.linalg.norm(colors[:, None, :]-new_colors[None, :, :], axis=2)/441.7
     costs = distances*5+size_cost*.15+color_cost*.45
+    surface_roles = np.array([o.surface_order for o in last])[:, None]
+    costs[surface_roles != np.array([o.surface_order for o in objects])[None, :]] = 1e6
+    stroke_roles = np.array([o.stroke_layer for o in last])[:, None]
+    costs[stroke_roles != np.array([o.stroke_layer for o in objects])[None, :]] = 1e6
     costs[(distances > .2) | (size_cost > 1.7) | (color_cost > .5)] = 1e6
     rows, columns = linear_sum_assignment(costs)
     matched = set()

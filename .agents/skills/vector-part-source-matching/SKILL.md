@@ -1,6 +1,6 @@
 ---
 name: vector-part-source-matching
-description: Match editable SVG parts to local source images or video in this repository. Use for contour, stacking, gradient and lighting refinement, including crawling outlines and flicker between frame redraws.
+description: Match editable SVG parts to local source images or video in this repository. Use for contours, shared edges between patterned faces, stacking, gradients, lighting and flicker between frame redraws.
 ---
 
 # Match vector parts to source
@@ -43,6 +43,8 @@ Keep measurements separate:
 If independent masks are unavailable, still deliver visual comparisons and describe the uncertain regions; do not manufacture a quantitative silhouette score. Preserve review coverage by part and frame so unreviewed areas remain explicit.
 
 For a moving sequence with flicker, crawling edges or shading that breaks into bands, follow the [temporal stability workflow](references/temporal-stability.md). Use its shot-local role maps to choose which SVG paths and paint to refine. Compare the actual renders with `workflow compare-temporal` after each candidate.
+
+For sawteeth where patterned faces touch, follow the [shared-edge guide](references/shared-edges.md). It covers two-sided evidence, clipping paint to a common edge, and comparing subpixel displacement and local roughness against an independently located source edge. For a replay of the same converter, compare decoded pixels across the full aligned sequence and report reproducibility separately from changes in fidelity.
 
 ## Refine, render, decide, repeat
 
