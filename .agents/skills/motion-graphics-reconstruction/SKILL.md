@@ -26,7 +26,7 @@ The app color control can replace estimated gradients with a flat color. Do not 
 
 ## Refine shapes and continuity
 
-For repeated part-by-part source matching, use the companion [Vector Part Source Matching skill](../vector-part-source-matching/SKILL.md). It keeps baseline/candidate comparisons, visible-source evidence and editability checks together.
+For repeated part-by-part source matching, use the companion [Vector Part Source Matching skill](../vector-part-source-matching/SKILL.md). If edges crawl or shading changes between redraws, capture the previous accepted render and follow the [temporal stability workflow](../vector-part-source-matching/references/temporal-stability.md). It separates motion present in the source from changes introduced by reconstruction.
 
 - Prefer stable shapes, gradient stops and transforms over blending two whole frames. Choose trusted observed anchors within one shot, and preserve their geometry and appearance at the anchor times.
 - Separate background, surface, shadow, highlight and foreground layers. Keep source stack order and clipping; inspect boundaries against both neighboring colors.

@@ -82,12 +82,18 @@ try {
   const normal = path.join(out, 'fractional-render');
   const low = path.join(out, 'low-rate-render');
 
-  await workflow('render', '--project', sourceProject, '--out-dir', normal, '--width', '160');
+  const stills = path.join(normal, 'stills');
+  await workflow('render', '--project', sourceProject, '--out-dir', normal, '--width', '160', '--stills-dir', stills);
   const normalCheck = await readJSON(path.join(normal, 'render-check.json'));
   assert.equal(normalCheck.passed, true);
   assert.equal(normalCheck.projectFPS, 29.97);
   assert.equal(normalCheck.fps, 29.97);
   assert.equal(normalCheck.frames, 6);
+  assert.equal(normalCheck.stillsDirectory, 'stills');
+  assert.deepEqual((await fs.readdir(stills)).sort(), Array.from({length: 6}, (_, i) => String(i).padStart(6, '0') + '.png'));
+  for (const sample of normalCheck.samples) {
+    assert.equal(sha(await fs.readFile(path.join(stills, String(sample.frame).padStart(6, '0') + '.png'))), sample.sha256);
+  }
   assert.deepEqual(normalCheck.externalRequests, []);
   const originalOutputs = await Promise.all(['index.html', 'preview.mp4'].map(async name => sha(await fs.readFile(path.join(normal, name)))));
   await rejectedRun(['render', '--project', sourceProject, '--out-dir', normal, '--width', '160'], /Output exists/);

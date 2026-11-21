@@ -159,6 +159,8 @@ npm run workflow -- compare \
 
 [Vector Part Source Matching](.agents/skills/vector-part-source-matching/SKILL.md)은 이미 변환한 부품을 원본과 반복 비교해 윤곽·겹침·그라데이션을 다듬는 동반 스킬입니다. 수정 전과 후보의 실제 렌더를 같은 영역에서 비교하고, 개선되지 않은 수정은 되돌리며 텍스트 편집과 시간 설정을 보존합니다. 가려진 면은 추정으로 구분합니다.
 
+프레임마다 화면이 울렁이면 같은 장면에서 움직임을 따라 윤곽과 음영을 구분하고, 원본에 없는 변화가 얼마나 줄었는지 이전 SVG와 비교할 수 있습니다. [프레임 간 떨림 검수](docs/scripts.md#프레임-간-떨림-검수)
+
 > $vector-part-source-matching 각 부품을 원본과 비교하고, 오차가 큰 부분부터 수정·렌더·검수를 반복해줘. 제목 편집과 프레임별 다시 그리기는 유지해줘.
 
 ## 구조와 현재 범위

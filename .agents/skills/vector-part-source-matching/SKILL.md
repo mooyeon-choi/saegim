@@ -1,6 +1,6 @@
 ---
 name: vector-part-source-matching
-description: Iteratively match editable SVG parts to a supplied source image or video in this reconstruction repository. Use for part-by-part contour, stack, gradient and lighting refinement with original-versus-render comparisons. Requires local source media and an existing vector project; does not automatically infer hidden geometry or recover original design files.
+description: Match editable SVG parts to local source images or video in this repository. Use for contour, stacking, gradient and lighting refinement, including crawling outlines and flicker between frame redraws.
 ---
 
 # Match vector parts to source
@@ -41,6 +41,8 @@ Keep measurements separate:
 - **Composition/time:** check silhouette placement, occlusion order, contact points, lighting across neighboring surfaces, and changes between source-adjacent frames. A good full-frame average can conceal a poor eye, finger or prop.
 
 If independent masks are unavailable, still deliver visual comparisons and describe the uncertain regions; do not manufacture a quantitative silhouette score. Preserve review coverage by part and frame so unreviewed areas remain explicit.
+
+For a moving sequence with flicker, crawling edges or shading that breaks into bands, follow the [temporal stability workflow](references/temporal-stability.md). Use its shot-local role maps to choose which SVG paths and paint to refine. Compare the actual renders with `workflow compare-temporal` after each candidate.
 
 ## Refine, render, decide, repeat
 

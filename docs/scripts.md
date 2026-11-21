@@ -135,6 +135,32 @@ node scripts/visual-qa.mjs
 
 출력 디렉터리가 비어 있지 않으면 중단합니다. `--overwrite`는 같은 생성 파일 이름만 교체하며 관련 없는 파일은 삭제하지 않습니다. 입력 파일이나 manifest를 포함한 디렉터리, 입력 파일과 연결된 출력 파일, 심볼릭 링크 경로에는 덮어쓰지 않습니다. 이전 후보의 비교를 보존하려면 새 출력 폴더를 사용하세요. 도구의 성공은 입력 검증과 이미지·보고서 생성을 뜻하며, 사람이 전체 영상을 검수했다는 뜻은 아닙니다. `--help`로 옵션을 확인할 수 있습니다.
 
+## 프레임 간 떨림 검수
+
+같은 위치의 원본·수정 전 SVG·수정 후 SVG를 비교해 실제 움직임과 재구성에서 생긴 변화를 구분합니다. 원본과 같은 관측 시각과 해상도로 수정 전후 프로젝트를 각각 렌더하세요. `render --stills-dir <새 폴더>`를 지정하면 MP4 인코딩 직전의 브라우저 캡처를 `000000.png`부터 보관합니다. 검수용 캡처는 새 폴더에 쓰며, 기본 렌더 동작은 기존과 같습니다.
+
+```sh
+run=artifacts/my-review
+width=640
+fps=24
+# 이 예시는 첫 프레임부터 원본 주기로 비교하는 CFR 영상입니다.
+mkdir -p "$run/source-png"
+ffmpeg -n -i input.mp4 -map 0:v:0 -fps_mode passthrough -start_number 0 "$run/source-png/%06d.png"
+npm run workflow -- render --project "$run/before.json" --out-dir "$run/before" \
+  --width "$width" --fps "$fps" --stills-dir "$run/before-png"
+npm run workflow -- render --project "$run/after.json" --out-dir "$run/after" \
+  --width "$width" --fps "$fps" --stills-dir "$run/after-png"
+npm run workflow -- compare-temporal --source "$run/source-png" \
+  --baseline "$run/before-png" --candidate "$run/after-png" \
+  --cut-starts 36 81 --save-role-maps --out-dir "$run/check"
+```
+
+예시의 `width`와 `fps`는 정렬한 원본의 폭과 관측 주기로 설정합니다. 시스템에 `ffmpeg` 명령이 없으면 `.venv/bin/python -c "import imageio_ffmpeg; print(imageio_ffmpeg.get_ffmpeg_exe())"`로 설치된 실행 파일 경로를 확인하세요. `36 81`은 예시 영상에서 새 장면이 시작되는 관측 번호입니다. 실제 컷으로 바꾸고, 단일 장면은 `--cut-starts` 뒤에 숫자를 생략하세요. 세 폴더는 같은 번호 집합을 가진 연속된 불투명 PNG여야 합니다. 번호 앞의 0 개수는 달라도 됩니다. 입력은 같은 색 공간으로 합성한 8비트 RGB 기준이며 각 변은 12~32766픽셀입니다. 클립 오프셋이나 VFR 영상은 표시 시각으로 먼저 대응시켜야 합니다. 파일 번호만으로 시간 정렬을 확인할 수는 없습니다.
+
+`report.json`은 RGB 채널 값 0~255에서 측정한 원본 대비 공간 오차(`spatial`), 같은 화면 좌표에서 원본과 렌더의 프레임 간 변화 차이(`sameScreenChange`), 신뢰할 수 있는 양방향 원본 움직임을 따라 계산한 변화 차이(`trackedChange`)를 기록합니다. 장면을 넘는 쌍은 제외합니다. 각 값에 지지 픽셀 수를 기록하고, 관측 쌍은 있지만 신뢰할 픽셀이 없으면 값은 `null`입니다. 쌍이 없는 입력에는 시간 지표가 없습니다.
+
+선택 출력 `roles/*.png`의 픽셀값 0·1·2·3은 각각 평탄한 면·음영·윤곽 후보·판정 유보입니다. 원본의 미세한 색 변화와 넓은 범위의 색 변화를 비교하고, 같은 장면의 앞뒤 관측을 움직임에 맞춰 확인합니다. 강한 반사광도 윤곽 후보가 될 수 있으므로 원본과 겹쳐 소유 부품을 확인하세요. SVG 보정과 채택 기준은 [스킬의 시간 일관성 지침](../.agents/skills/vector-part-source-matching/references/temporal-stability.md)에 있습니다.
+
 ## 관측 도형 연결 도구
 
 `scripts/object_scene_tracks.py`는 프레임별 도형 관측을 입력받아 컷 경계를 넘지 않는 트랙을 만듭니다. `scripts/object-scene-runtime.mjs`는 그 결과를 SVG로 그립니다. 재질 그룹 ID와 색상은 호출자가 정하며 특정 대상이나 영상 길이가 고정되어 있지 않습니다.

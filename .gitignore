@@ -28,6 +28,7 @@ artifacts/
 !/scripts/visual-qa.mjs
 !/scripts/compare-frames.py
 !/scripts/compare-parts.py
+!/scripts/compare-temporal.py
 !/scripts/object-scene-runtime.mjs
 !/scripts/object_scene_tracks.py
 !/scripts/parametric-vector-model.mjs

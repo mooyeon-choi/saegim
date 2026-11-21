@@ -1,11 +1,11 @@
 {
   "schemaVersion": 2,
   "scope": "Public reusable source scripts only. Local reference-specific experiments and generated data are intentionally excluded.",
-  "generatedOn": "2026-10-18",
+  "generatedOn": "2026-11-21",
   "statusDefinitions": {
     "maintained": "Reusable development, analysis, validation or release tool included in the public source scope. Prerequisites still apply."
   },
-  "entryCount": 24,
+  "entryCount": 25,
   "entries": [
     {
       "path": "scripts/analyze-video.py",
@@ -59,6 +59,29 @@
         ".data/qa-fixtures",
         "/System/Library/Fonts/Supplemental/Arial.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+      ]
+    },
+    {
+      "path": "scripts/compare-temporal.py",
+      "status": "maintained",
+      "stage": "comparison",
+      "purpose": "Measure source-relative flicker in aligned baseline and candidate PNG sequences. Report cut-aware RGB residual changes and reliable motion-tracked changes by source-derived role.",
+      "invocation": "python-cli",
+      "freshClone": "requires-caller-stills",
+      "prerequisites": [
+        "Three aligned, equal-size sequences of opaque numbered PNGs and the source observation indices where new shots begin."
+      ],
+      "cliOptionsObserved": [
+        "--source",
+        "--baseline",
+        "--candidate",
+        "--cut-starts",
+        "--out-dir",
+        "--save-role-maps"
+      ],
+      "outputs": [
+        "<out-dir>/report.json",
+        "<out-dir>/roles/*.png (optional)"
       ]
     },
     {
@@ -284,6 +307,7 @@
         "--fps",
         "--width",
         "--python",
+        "--stills-dir",
         "--html-only",
         "--overwrite",
         "--help"
@@ -292,7 +316,8 @@
         "<out-dir>/index.html",
         "<out-dir>/preview.mp4 (unless html-only)",
         "<out-dir>/render-check.json",
-        "<out-dir>/frame-*.png (first and last)"
+        "<out-dir>/frame-*.png (first and last)",
+        "<stills-dir>/<observation-index>.png (optional lossless browser captures)"
       ]
     },
     {

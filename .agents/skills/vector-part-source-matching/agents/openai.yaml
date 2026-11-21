@@ -1,4 +1,4 @@
 interface:
   display_name: "Vector Part Source Matching"
-  short_description: "Refine SVG parts through source-image comparison"
-  default_prompt: "Use $vector-part-source-matching to compare each editable SVG part with the supplied original and iteratively refine its contours, layering and gradients while preserving text edits and timing."
+  short_description: "Match SVG contours and shading across frames"
+  default_prompt: "Use $vector-part-source-matching to compare editable SVG parts with the source, refine contours and shading, and check frame-to-frame stability while preserving text edits and timing."

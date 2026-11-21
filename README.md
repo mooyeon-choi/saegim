@@ -168,7 +168,7 @@ Open this repository in an agent that can read local skill files. Ask it to foll
 
 > Use `.agents/skills/motion-graphics-reconstruction/SKILL.md` to reconstruct my local video as editable HTML/SVG. Preserve editable text and cuts, then produce a source-versus-render comparison GIF.
 
-> Use `.agents/skills/vector-part-source-matching/SKILL.md` to refine an existing project's contours and lighting. Compare actual renders with the source after each change and preserve title editing and frame redraw.
+> Use `.agents/skills/vector-part-source-matching/SKILL.md` to reduce crawling outlines and patchy shading. Compare the source, previous SVG and candidate within each shot. Preserve title editing and frame redraw.
 
 The skills need this repository and its dependencies; copying a skill folder alone does not install the renderer. They do not add an MCP server or automatically infer hidden geometry. See the [agent workflow](docs/agent-workflow.md).
 

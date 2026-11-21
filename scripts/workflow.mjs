@@ -12,6 +12,7 @@ const tasks={
   'fit-surfaces':[process.execPath,'scripts/fit-surface-gradients.mjs'],
   'refine-surfaces':[process.execPath,'scripts/refine-frame-surfaces.mjs'],
   compare:[python,'scripts/compare-video.py'],
+  'compare-temporal':[python,'scripts/compare-temporal.py'],
   fixtures:[python,'scripts/create-fixtures.py'],
   'verify-fixtures':[python,'scripts/verify-analysis.py'],
   'render-fixtures':[process.execPath,'scripts/visual-qa.mjs'],

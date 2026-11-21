@@ -9,16 +9,18 @@ import {spawn, execFileSync} from 'node:child_process';
 import {build} from 'esbuild';
 import {chromium} from '@playwright/test';
 
-const {values:args}=parseArgs({options:{project:{type:'string'},'out-dir':{type:'string'},fps:{type:'string'},width:{type:'string'},python:{type:'string'},'html-only':{type:'boolean'},overwrite:{type:'boolean'},help:{type:'boolean'}}});
-if(args.help){console.log('node scripts/render-project.mjs --project project.json --out-dir artifacts/run [--fps 24] [--width 960] [--html-only] [--overwrite]');process.exit(0);}
+const {values:args}=parseArgs({options:{project:{type:'string'},'out-dir':{type:'string'},'stills-dir':{type:'string'},fps:{type:'string'},width:{type:'string'},python:{type:'string'},'html-only':{type:'boolean'},overwrite:{type:'boolean'},help:{type:'boolean'}}});
+if(args.help){console.log('node scripts/render-project.mjs --project project.json --out-dir artifacts/run [--fps 24] [--width 960] [--stills-dir NEW_DIR] [--html-only] [--overwrite]');process.exit(0);}
 if(!args.project||!args['out-dir'])throw Error('--project and --out-dir are required');
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),out=path.resolve(args['out-dir']);
+const stills=args['stills-dir'] ? path.resolve(args['stills-dir']) : null;
+if(stills && (args['html-only'] || stills===out || out.startsWith(stills+path.sep) || existsSync(stills)))throw Error('--stills-dir requires video rendering and a new directory separate from --out-dir');
 const htmlPath=path.join(out,'index.html'),videoPath=path.join(out,'preview.mp4');
 for(const file of [htmlPath,...args['html-only']?[]:[videoPath]])if(!args.overwrite&&await fs.stat(file).catch(()=>null))throw Error(`Output exists: ${file}. Choose another out-dir or --overwrite.`);
 await fs.mkdir(out,{recursive:true});await fs.mkdir(path.join(root,'.cache'),{recursive:true});
 const bundle=path.join(root,'.cache',`render-engine-${randomUUID()}.mjs`);
 const hash=data=>createHash('sha256').update(data).digest('hex');
-let browser,encoder,encoderDone;
+let browser,encoder,encoderDone,pendingStills;
 const report={passed:false,externalRequests:[],browserErrors:[]};
 try{
   await build({entryPoints:[path.join(root,'src/engine/index.ts')],outfile:bundle,bundle:true,platform:'node',format:'esm'});
@@ -47,19 +49,29 @@ try{
     encoderDone=new Promise((resolve,reject)=>{encoder.on('error',reject);encoder.on('close',code=>code===0?resolve():reject(Error(stderr||`Encoder exited${code}`)));});
     let encoderFailure;encoderDone.catch(error=>encoderFailure=error);encoder.stdin.on('error',error=>encoderFailure=error);
     const samples=[];
+    if(stills){
+      await fs.mkdir(path.dirname(stills),{recursive:true});
+      pendingStills=await fs.mkdtemp(path.join(path.dirname(stills),'.render-stills-'));
+    }
     for(let i=0;i<count;i++){
       if(encoderFailure)throw encoderFailure;
       await page.evaluate(async t=>{await window.motionPlayer.seek(t);await document.fonts.ready;if(document.querySelector('#stage image,#stage video,#stage canvas,#stage foreignObject'))throw Error('Raster or media in reconstructed stage');await new Promise(requestAnimationFrame);},Math.min(i/fps,doc.duration));
       const png=await page.screenshot({type:'png',animations:'disabled'});
       await new Promise((resolve,reject)=>encoder.stdin.write(png,error=>error?reject(error):resolve()));
+      if(pendingStills)await fs.writeFile(path.join(pendingStills,String(i).padStart(6,'0')+'.png'),png);
       if(i===0||i===count-1){const name=`frame-${String(i).padStart(6,'0')}.png`;await fs.writeFile(path.join(out,name),png);samples.push({frame:i,file:name,sha256:hash(png)});}
       if(i%Math.max(1,Math.round(fps))===0||i===count-1)console.log(JSON.stringify({frame:i+1,frames:count}));
     }
     encoder.stdin.end();await encoderDone;
     const metadata=JSON.parse(execFileSync(python,['-c','import cv2,json,sys;c=cv2.VideoCapture(sys.argv[1]);fps=c.get(cv2.CAP_PROP_FPS);n=0\nwhile c.read()[0]: n+=1\nc.release();print(json.dumps({"decodedFrames":n,"fps":fps}))',videoPath],{encoding:'utf8'}));
     if(metadata.decodedFrames!==count||Math.abs(metadata.fps-fps)>.001||report.browserErrors.length||report.externalRequests.length)throw Error('Frame count, FPS or browser validation failed');
+    if(pendingStills){
+      await fs.rename(pendingStills,stills);
+      pendingStills=null;
+      report.stillsDirectory=path.relative(out,stills);
+    }
     Object.assign(report,{passed:true,video:'preview.mp4',videoSHA256:hash(await fs.readFile(videoPath)),width,height,projectFPS:doc.fps,fps,frames:count,decodedFrames:metadata.decodedFrames,encodedDuration:count/fps,originalIntermediateGroundTruth:false,samples});
     console.log(JSON.stringify({passed:true,video:videoPath,frames:count}));
   }
 }catch(error){report.failure=String(error.stack??error);throw error;}
-finally{if(encoder&&encoder.exitCode===null)encoder.kill();if(browser)await browser.close();await fs.rm(bundle,{force:true});await fs.writeFile(path.join(out,'render-check.json'),JSON.stringify(report,null,2)+'\n');}
+finally{if(encoder&&encoder.exitCode===null)encoder.kill();if(browser)await browser.close();if(pendingStills)await fs.rm(pendingStills,{recursive:true,force:true});await fs.rm(bundle,{force:true});await fs.writeFile(path.join(out,'render-check.json'),JSON.stringify(report,null,2)+'\n');}
